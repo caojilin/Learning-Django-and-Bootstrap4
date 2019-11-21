@@ -34,3 +34,6 @@ def carousel(request):
 
 def sidebar(request):
     return render(request, 'pages/sidebar.html')
+
+def collapse(request):
+    return render(request, 'pages/collapse.html')

@@ -11,5 +11,7 @@ urlpatterns = [
     path('car', views.card, name='card'),
     path('carousel', views.carousel, name='carousel'),
     path('sidebar', views.sidebar, name='sidebar'),
+    path('collapse', views.collapse, name='collapse'),
+
 
 ]
