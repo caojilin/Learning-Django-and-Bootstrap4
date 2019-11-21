@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <button class="btn btn-primary" type="button">Primary</button>
+    <button class="btn btn-secondary" type="button">Secondary</button>
+    <button class="btn btn-info" type="button">Info</button>
+    <button class="btn btn-success" type="button">Success</button>
+    <button class="btn btn-warning" type="button">Warning</button>
+    <button class="btn btn-danger" type="button">Danger</button>
+    <button class="btn btn-link" type="button">Link</button>
+
+</div>
+
+<hr/>
+
+<a class="btn btn-primary" href="#">Link</a>
+<button class="btn btn-primary" type="submit">Button</button>
+<input class="btn btn-primary" type="button" value="Input">
+<input class="btn btn-primary" type="submit" value="Submit">
+
+<hr/>
+
+<div>
+    <a class="btn btn-primary btn-lg active" href="#">Primary link</a>
+    <a class="btn btn-secondary btn-lg active" href="#">Link</a>
+</div>
+
+<hr/>
+
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+        Toggle
+    </button>
+
+</div>
+{% endblock %}

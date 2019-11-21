@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="alert alert-success"><strong>Success!</strong> You <a class="alert-link" href="#">successfully accomplished</a> something.</div>
+<div class="alert alert-info"><strong>Info!</strong> This is a <a class="alert-link" href="#">’just so you know’</a> message.</div>
+<div class="alert alert-warning"><strong>Warning!</strong> Something went wrong <a class="alert-link" href="#">better take a look</a>.</div>
+<div class="alert alert-danger"><strong>Watch out!</strong> You could be in <a class="alert-link" href="#">trouble.</a></div>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    Click the cross to dismiss this alert!!
+</div>
+
+{% endblock %}
