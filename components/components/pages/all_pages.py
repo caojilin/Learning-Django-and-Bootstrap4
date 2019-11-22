@@ -1,5 +1,5 @@
 all_components = [
-    'alert',
+    'grid',
     'badge',
     'breadcrumb',
     'button',
@@ -7,4 +7,5 @@ all_components = [
     'carousel',
     'collapse',
     'forms',
+    'modal',
 ]

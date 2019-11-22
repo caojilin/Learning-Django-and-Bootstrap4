@@ -14,9 +14,9 @@ def index(request):
     return render(request, 'pages/index.html', context)
 
 
-def alert(request):
+def grid(request):
 
-    return render(request, 'pages/alert.html', context)
+    return render(request, 'pages/grid.html', context)
 
 
 def badge(request):
@@ -53,3 +53,7 @@ def forms(request):
 
 def login(request):
     return render(request, 'pages/login.html', context)
+
+
+def modal(request):
+    return render(request, 'pages/modal.html', context)
