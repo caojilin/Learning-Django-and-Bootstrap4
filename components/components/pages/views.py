@@ -1,9 +1,25 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .all_pages import all_components
 from django.contrib import auth, messages
 
 # Create your views here.
+
+all_components = [
+    'grid',
+    'badge',
+    'breadcrumb',
+    'button',
+    'card',
+    'carousel',
+    'collapse',
+    'forms',
+    'modal',
+    'manga',
+]
+
+a = ["shingeki-no-kyojin-chapter-" + str(i) for i in range(1, 124)]
+b = ["Shingeki no Kyojin – Chapter " + str(i) for i in range(1, 124)]
+manga_list = dict(zip(a, b))
 
 context = {
     'all_components': all_components,
@@ -63,3 +79,14 @@ def login(request):
 
 def modal(request):
     return render(request, 'pages/modal.html', context)
+
+
+def manga(request):
+    numbers = [str(i) for i in list(range(1, 47))]
+    this_context = {
+        'all_components': all_components,
+        'numbers': numbers,
+        "manga_list": manga_list,
+    }
+
+    return render(request, 'pages/manga.html', this_context)

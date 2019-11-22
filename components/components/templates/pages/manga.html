@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="controls" style="text-align: center;">
+        <a href="#" rel="prev"><button>Previous
+                Chapter</button></a>
+
+        <select onchange="if (this.value) window.location.href=this.value">
+            {% for key, value in manga_list.items %}
+            <!-- <option value="http://readshingekinokyojin.com/manga/{{ key }}/">{{ value }}</option> -->
+            <option value="{% url 'index' %}">{{ value }}</option>
+            {% endfor %}
+        </select>
+
+
+        <a href="#" rel="next"><button>Next
+                Chapter</button></a>
+        Display Mode : <select class="mode">
+            <option value="0">Multi image</option>
+            <option value="1">Single image</option>
+        </select>
+        <br>
+        <style>
+            div.container {
+                text-align: center;
+            }
+
+            .img_container {
+                margin-bottom: 5px;
+                margin-top: 5px;
+            }
+
+            .img_container img {
+                border: 2px solid;
+
+            }
+        </style>
+
+    </div>
+
+    <div class="pages text-center">
+        {% for num in numbers %}
+        {% with image_url="img/attack_on_titan_121/"|add:num|add:".jpg" %}
+        <div class="img_container mb-2">
+            <img class="img-fluid" src="{% static image_url %}">
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

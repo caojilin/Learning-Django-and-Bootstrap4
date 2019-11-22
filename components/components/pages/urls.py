@@ -15,4 +15,5 @@ urlpatterns = [
     path('forms', views.forms, name='forms'),
     path('login', views.login, name='login'),
     path('modal', views.modal, name='modal'),
+    path('manga', views.manga, name='manga'),
 ]
