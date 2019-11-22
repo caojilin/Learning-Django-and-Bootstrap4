@@ -3,37 +3,33 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'index' %}">
         <img src="{% static 'img/bootstrap-solid.svg' %}" width="30" height="30" class="d-inline-block align-top"
-             alt="">
+            alt="">
         Bootstrap
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                    aria-haspopup="true" aria-expanded="false">
                     Components
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'alert' %}">alert</a>
-                    <a class="dropdown-item" href="{% url 'badge' %}">badge</a>
-                    <a class="dropdown-item" href="{% url 'breadcrumb' %}">breadcrumb</a>
-                    <a class="dropdown-item" href="{% url 'button' %}">button</a>
-                    <a class="dropdown-item" href="{% url 'card' %}">card </a>
-                    <a class="dropdown-item" href="{% url 'carousel' %}">carousel</a>
-                    <!--                    <a class="dropdown-item" href="{% url 'sidebar' %}">sidebar</a>-->
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    {% if all_components %}
+                    {% for component in all_components %}
+                    <a class="dropdown-item" href="{% url component %}">{{ component }}</a>
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </li>
             <li class="nav-item">

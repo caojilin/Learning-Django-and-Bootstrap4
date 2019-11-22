@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>
+
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+        aria-expanded="false" aria-controls="collapseExample">
+        1 + 1 = ?
+    </button>
+</p>
+
+<p class="collapse" id="collapseExample">2</p>
+
+<p>
+
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2"
+        aria-expanded="false" aria-controls="collapseExample2">
+        3 x 3 = ?
+    </button>
+</p>
+
+<p class="collapse" id="collapseExample2">9</p>
+
+{% endblock %}

@@ -12,6 +12,6 @@ urlpatterns = [
     path('carousel', views.carousel, name='carousel'),
     path('sidebar', views.sidebar, name='sidebar'),
     path('collapse', views.collapse, name='collapse'),
-
-
+    path('forms', views.forms, name='forms'),
+    path('login', views.login, name='login'),
 ]
