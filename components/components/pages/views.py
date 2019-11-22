@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .all_pages import all_components
 from django.contrib import auth, messages
+
 # Create your views here.
 
 context = {
@@ -10,12 +11,10 @@ context = {
 
 
 def index(request):
-
     return render(request, 'pages/index.html', context)
 
 
 def grid(request):
-
     return render(request, 'pages/grid.html', context)
 
 
@@ -36,7 +35,14 @@ def card(request):
 
 
 def carousel(request):
-    return render(request, 'pages/carousel.html', context)
+    album1 = [str(i) for i in list(range(1, 4))]
+    album2 = [str(i) for i in list(range(1, 8))]
+    this_context = {
+        'all_components': all_components,
+        'album1': album1,
+        'album2': album2,
+    }
+    return render(request, 'pages/carousel.html', this_context)
 
 
 def sidebar(request):
