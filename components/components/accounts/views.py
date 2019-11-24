@@ -3,10 +3,6 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 
 all_components = [
-    'grid',
-    'badge',
-    'breadcrumb',
-    'button',
     'card',
     'carousel',
     'collapse',

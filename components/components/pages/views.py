@@ -5,10 +5,7 @@ from django.contrib import auth, messages
 # Create your views here.
 
 all_components = [
-    'grid',
-    'badge',
-    'breadcrumb',
-    'button',
+  
     'card',
     'carousel',
     'collapse',
@@ -29,22 +26,6 @@ context = {
 
 def index(request):
     return render(request, 'pages/index.html', context)
-
-
-def grid(request):
-    return render(request, 'pages/grid.html', context)
-
-
-def badge(request):
-    return render(request, 'pages/badge.html', context)
-
-
-def breadcrumb(request):
-    return render(request, 'pages/breadcrumb.html', context)
-
-
-def button(request):
-    return render(request, 'pages/button.html', context)
 
 
 def card(request):

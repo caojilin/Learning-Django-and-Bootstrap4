@@ -4,10 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('grid', views.grid, name="grid"),
-    path('badge', views.badge, name="badge"),
-    path('breadcrumb', views.breadcrumb, name="breadcrumb"),
-    path('button', views.button, name='button'),
     path('car', views.card, name='card'),
     path('carousel', views.carousel, name='carousel'),
     path('sidebar', views.sidebar, name='sidebar'),
