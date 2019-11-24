@@ -9,8 +9,8 @@
 
         <select onchange="if (this.value) window.location.href=this.value">
             {% for key, value in manga_list.items %}
-            <!-- <option value="http://readshingekinokyojin.com/manga/{{ key } }/">{{ value }}</option> -->
-            <option value="{% url 'index' %}">{{ value }}</option>
+            <!-- <option value="http://readshingekinokyojin.com/manga/{{ key }}/">{{ value }}</option> -->
+            <option value=" {% url 'index' %}">{{ value }}</option>
             {% endfor %}
         </select>
 

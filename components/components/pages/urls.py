@@ -13,7 +13,8 @@ urlpatterns = [
     path('sidebar', views.sidebar, name='sidebar'),
     path('collapse', views.collapse, name='collapse'),
     path('forms', views.forms, name='forms'),
-    path('login', views.login, name='login'),
     path('modal', views.modal, name='modal'),
     path('manga', views.manga, name='manga'),
+    path('gallery', views.gallery, name='gallery'),
+    path('about', views.about, name='about'),
 ]

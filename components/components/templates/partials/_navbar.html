@@ -13,12 +13,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+            <li {% if '/' == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+            <li {% if 'about' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                {% endif %}>
+                <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -36,6 +38,39 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
+
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li {% if 'dashboard' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                {% endif %}>
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    Welcome {{ user.username }} (Dashboard)</a>
+            </li>
+            <li class="nav-item mr-3">
+                <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+                <form action="{% url 'logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+            </li>
+            {% else %}
+            <li {% if 'register' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                {% endif %}>
+                <a class="nav-link" href="{% url 'register' %}">
+                    <i class="fas fa-user-plus"></i> Register</a>
+            </li>
+            <li {% if 'login' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                {% endif %}>
+                <a class="nav-link" href="{% url 'login' %}">
+                    <i class="fas fa-sign-in-alt"></i>
+
+                    Login</a>
+            </li>
+            {% endif %}
+        </ul>
+
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

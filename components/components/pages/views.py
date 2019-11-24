@@ -15,6 +15,7 @@ all_components = [
     'forms',
     'modal',
     'manga',
+    'gallery',
 ]
 
 a = ["shingeki-no-kyojin-chapter-" + str(i) for i in range(1, 124)]
@@ -73,10 +74,6 @@ def forms(request):
     return render(request, 'pages/forms.html', context)
 
 
-def login(request):
-    return render(request, 'pages/login.html', context)
-
-
 def modal(request):
     return render(request, 'pages/modal.html', context)
 
@@ -90,3 +87,11 @@ def manga(request):
     }
 
     return render(request, 'pages/manga.html', this_context)
+
+
+def gallery(request):
+    return render(request, 'pages/gallery.html', context)
+
+
+def about(request):
+    return render(request, 'pages/about.html', context)
