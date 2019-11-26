@@ -5,7 +5,7 @@ from django.contrib import auth, messages
 # Create your views here.
 
 all_components = [
-  
+
     'card',
     'carousel',
     'collapse',
@@ -71,7 +71,12 @@ def manga(request):
 
 
 def gallery(request):
-    return render(request, 'pages/gallery.html', context)
+    album = [str(i) for i in list(range(1, 15))]
+    this_context = {
+        'all_components': all_components,
+        'album': album,
+    }
+    return render(request, 'pages/gallery.html', this_context)
 
 
 def about(request):
