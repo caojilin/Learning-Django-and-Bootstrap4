@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from datetime import datetime
+from .models import Album
+from .forms import UploadFileForm
 
 all_components = [
     'card',
@@ -86,6 +89,14 @@ def logout(request):
 def dashboard(request):
     # user_contacts = Contact.objects.order_by('-contact_date').filter(
     #     user_id=request.user.id)
+    # album = Album.objects.order_by('-list_date')
 
-    # context = {'contacts': user_contacts}
-    return render(request, 'accounts/dashboard.html', context)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = UploadFileForm()
+    this_context = {'all_components': all_components, 'form': form}
+    return render(request, 'accounts/dashboard.html', this_context)
