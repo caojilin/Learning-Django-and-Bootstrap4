@@ -33,6 +33,7 @@ def index(request):
     else:
         return render(request, 'pages/index.html', context)
 
+
 def card(request):
     return render(request, 'pages/card.html', context)
 
