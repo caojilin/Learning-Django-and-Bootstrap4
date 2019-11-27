@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from .models import Album
 from .forms import UploadFileForm
+from django.views.decorators.csrf import csrf_protect
 
 all_components = [
     'card',
@@ -86,9 +87,8 @@ def logout(request):
         return redirect('index')
 
 
+@csrf_protect
 def dashboard(request):
-    # user_contacts = Contact.objects.order_by('-contact_date').filter(
-    #     user_id=request.user.id)
     # album = Album.objects.order_by('-list_date')
 
     if request.method == 'POST':
