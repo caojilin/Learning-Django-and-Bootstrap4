@@ -6,8 +6,6 @@ all_components = [
     'card',
     'carousel',
     'collapse',
-    'forms',
-    'modal',
     'manga',
     'gallery',
 ]

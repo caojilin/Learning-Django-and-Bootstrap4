@@ -5,12 +5,9 @@ from django.contrib import auth, messages
 # Create your views here.
 
 all_components = [
-
     'card',
     'carousel',
     'collapse',
-    'forms',
-    'modal',
     'manga',
     'gallery',
 ]
@@ -25,8 +22,16 @@ context = {
 
 
 def index(request):
-    return render(request, 'pages/index.html', context)
-
+    if request.method == 'POST':
+        password = request.POST['password']
+        if password == "letmein":
+            messages.success(request, 'correct password')
+            return render(request, 'protectpage.html', context)
+        else:
+            messages.error(request, 'wrong password')
+            return render(request, 'pages/index.html', context)
+    else:
+        return render(request, 'pages/index.html', context)
 
 def card(request):
     return render(request, 'pages/card.html', context)
@@ -49,14 +54,6 @@ def sidebar(request):
 
 def collapse(request):
     return render(request, 'pages/collapse.html', context)
-
-
-def forms(request):
-    return render(request, 'pages/forms.html', context)
-
-
-def modal(request):
-    return render(request, 'pages/modal.html', context)
 
 
 def manga(request):
