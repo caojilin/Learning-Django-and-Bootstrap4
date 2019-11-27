@@ -47,9 +47,18 @@ function gotCommand(error, results) {
   }
 }
 
+let gameover = false;
+
 function keyPressed() {
   if (key == ' ') {
     unicorn.jump();
+  }
+  if (gameover){
+    if(keyIsPressed === true){
+        trains = [];
+        gameover = false;
+        loop();
+    }
   }
 }
 
@@ -65,6 +74,11 @@ function draw() {
     t.show();
     if (unicorn.hits(t)) {
       console.log('game over');
+      textSize(32);
+      fill(0, 102, 153);
+      textAlign(CENTER);
+      text("game over, press any key to restart", width/2, height/2);
+      gameover = true;
       noLoop();
     }
   }
