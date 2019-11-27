@@ -1,6 +1,6 @@
 {% load static %}
 <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Start Bootstrap</div>
+    <div class="sidebar-heading">Table of Content</div>
     <div class="list-group list-group-flush">
         {% if all_components %}
         {% for component in all_components %}
@@ -9,19 +9,3 @@
         {% endif %}
     </div>
 </div>
-
-<!-- <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    {% if all_components %}
-    {% for component in all_components %}
-    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="{% url component %}" role="tab"
-        aria-controls="v-pills-home" aria-selected="true">{{ component }}</a>
-    {% endfor %}
-    {% endif %}
-</div> -->
-<!-- <div class="tab-content" id="v-pills-tabContent">
-    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...
-    </div>
-    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-</div> -->

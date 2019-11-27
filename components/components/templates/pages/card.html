@@ -2,39 +2,84 @@
 {% load static %}
 
 {% block content %}
+<style>
+p {
+  font-family:'Montserrat', Arial, sans-serif
+}
 
+</style>
 <div class="container">
-    <div class="row justify-content-between">
-        <div class="col-5">
-            <h2>Stretched Link in Card</h2>
-            <p>Add the .stretched-link class to a link inside the card, and it will make the whole card clickable (the
-                card will
-                act as a link):</p>
-            <div class="card" style="width:400px">
-                <img class="card-img-top" src="{% static 'img/profiles/1.png' %}" alt="Card image" style="width:100%">
+    <h2>Protagonists</h2>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/gta5/michael_t.jpg' %}" alt="Card image"
+                     style="max-width: 203px">
                 <div class="card-body">
-                    <h4 class="card-title">John Doe</h4>
-                    <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                    <h3>Michael De Santa</h3>
+                    <small> Age: <strong>45</strong><br> Occupation: <strong>Retired bank robber</strong><br> Aliases:
+                        <strong>Michael Townley</strong><br> Affiliated With: <strong>Trevor Phillips, Franklin Clinton,
+                            Lester Crest</strong><br> First Appearance: <strong>Prologue</strong><br> Last Appearance:
+                        <strong>Final Mission</strong><br> Special Ability: <strong>Slow down time while aiming</strong><br>
+                        Voiced By: <strong>Ned Luke</strong><br> </small> <br>
+                    <p style="text-align: justify;">Michael is a retired
+                        bank robber who moved to the west coast to
+                        escape his past and start a new life. Michael is currently in the witness protection program
+                        after making a deal with the FIB (GTA's equivalent of the FBI) which involved faking his own
+                        death. He resides in the glamorous Rockford Hills region of Los Santos along with his wife
+                        Amanda, son Jimmy, and daughter Tracey. However, Michael misses the thrill of the criminal
+                        lifestyle, and this - together with his dysfunctional family life - causes Michael to return to
+                        old ways.</p>
                     <a href="#" class="btn btn-primary stretched-link">See Profile</a>
                 </div>
             </div>
         </div>
-        <div class="col-5">
-            <h2>Stretched Link in Card</h2>
-            <p>Add the .stretched-link class to a link inside the card, and it will make the whole card clickable (the
-                card will
-                act as a link):</p>
-            <div class="card" style="width:400px">
-                <img class="card-img-top" src="{% static 'img/profiles/1.png' %}" alt="Card image" style="width:100%">
+        <div class="col-sm">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/gta5/trevor_t.jpg' %}" alt="Card image"
+                     style="max-width: 175px">
                 <div class="card-body">
-                    <h4 class="card-title">John Doe</h4>
-                    <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                    <h3>Trevor Phillips</h3>
+                    <small> Age: <strong>Early 40s</strong><br> Occupation: <strong>Drug Dealer</strong><br> Aliases:
+                        <strong>--</strong><br> Affiliated With: <strong>Michael De Santa, Franklin Clinton, Lester
+                            Crest, Ron Jakowski</strong><br> First Appearance: <strong>Prologue</strong><br> Last
+                        Appearance: <strong>Final Mission</strong><br> Special Ability: <strong>Inflict more
+                            damage</strong><br> Voiced By: <strong>Steven Ogg</strong><br> </small> <br>
+                    <p style="text-align: justify;">Trevor once trained as a military pilot, but was discharged as
+                        mentally unfit. Trevor is a subhuman maniac with a history of severe aggression and violence. He
+                        did some bank jobs with Michael De Santa and Brad Snider in North Yankton, and was led to
+                        believe that Michael died after taking a bullet during a failed heist. Now residing in Sandy
+                        Shores, Trevor operates a drug smuggling organization called Trevor Phillips Enterprises. Trevor
+                        has a particular dislike for bikers and is currently at war with The Lost motorcycle gang.</p>
+                    <a href="#" class="btn btn-primary stretched-link">See Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/gta5/franklin_t.jpg' %}" alt="Card image"
+                     style="max-width: 183px">
+                <div class="card-body">
+                    <h3>Franklin Clinton</h3>
+                    <small> Age: <strong>25</strong><br> Occupation: <strong>Repossession Agent</strong><br> Aliases:
+                        <strong>--</strong><br> Affiliated With: <strong>Michael De Santa, Trevor Phillips, Lester
+                            Crest, Lamar Davis, The Families</strong><br> First Appearance: <strong>Franklin and
+                            Lamar</strong><br> Last Appearance: <strong>Final Mission</strong><br> Special Ability:
+                        <strong>Slow down time while driving</strong><br> Voiced By: <strong>Shawn Fonteno</strong><br>
+                    </small> <br>
+                    <p style="text-align: justify;">Franklin is a gang-banger from South Los Santos with aspirations to
+                        make it big. He recognizes that the glory days - if there ever were glory days of gang banging -
+                        have long since passed, and that he must escape the hood life to satisfy his ambitions. At the
+                        start of the game, Franklin does odd jobs with his friend Lamar for an Armenian car dealer
+                        called Simeon Yetarian. However, he soon crosses paths with Michael De Santa during a failed
+                        repossession of his son's car. Impressed with Franklin's potential to make money, Michael
+                        employs him for various jobs.</p>
                     <a href="#" class="btn btn-primary stretched-link">See Profile</a>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
 
 {% endblock %}

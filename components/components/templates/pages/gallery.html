@@ -1,123 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
-
-
 <div class="container">
     <div class="row">
         <div class="row">
+            {% for num in album %}
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail"
-                    href="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-image-id="" data-toggle="modal" data-title=""
-                    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
 
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
+                {% with image_static="img/mycollection/"|add:num|add:".jpeg" %}
+                <a class="thumbnail" href="{% static image_static %}" data-image-id="" data-toggle="modal"
+                    data-title="Image" data-image="{% static image_static %}" data-target="#image-gallery">
+                    <img class="img-thumbnail" src="{% static image_static %}" alt="Another alt text"
+                        style="max-width: 280px; max-height: 280px">
                 </a>
+                {% endwith %}
             </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Test1"
-                    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
+            {% endfor %}
 
-
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-
-
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    data-target="#image-gallery">
-                    <img class="img-thumbnail"
-                        src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                        alt="Another alt text">
-                </a>
-            </div>
         </div>
-
 
         <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
             aria-hidden="true">
@@ -130,7 +30,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                        <div class="text-center">
+                            <img id="image-gallery-image" class="img-fluid" src="">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i
@@ -146,6 +48,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}

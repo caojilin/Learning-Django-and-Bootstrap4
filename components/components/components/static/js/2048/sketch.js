@@ -1,15 +1,4 @@
-{% extends 'base.html' %}
-
-{% load static %}
-
-{% block title %} | About Us {% endblock %}
-
-
-{% block content %}
-
-<h1>about</h1>
-<script>
-    // Daniel Shiffman
+// Daniel Shiffman
 // http://codingtra.in
 // http://patreon.com/codingtrain
 
@@ -25,8 +14,7 @@ let score = 0;
 
 function setup() {
   var canvas = createCanvas(400, 400);
-  canvas.parent('#sketch-holder');
-  background("blue");
+  canvas.parent('sketch-holder');
   noLoop();
   grid = blankGrid();
   grid_new = blankGrid();
@@ -132,15 +120,3 @@ function drawGrid() {
     }
   }
 }
-</script>
-<div id="sketch-holder">
-    <p style="font-size:32pt" id="score"></p>
-</div>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
-<script src="{% static 'js/2048/config.js' %}"></script>
-<script src="{% static 'js/2048/grid.js' %}"></script>
-<script src="{% static 'js/2048/game.js' %}"></script>
-<script src="{% static 'js/2048/sketch.js' %}"></script>
-{% endblock %}
-
