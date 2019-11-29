@@ -59,10 +59,10 @@ function draw() {
   for (let t of trains) {
     t.move();
     t.show();
-    if (unicorn.hits(t)) {
-      console.log('game over');
-      noLoop();
-    }
+//    if (unicorn.hits(t)) {
+//      console.log('game over');
+//      noLoop();
+//    }
   }
 
   unicorn.show();
