@@ -11,4 +11,5 @@ urlpatterns = [
     path('manga', views.manga, name='manga'),
     path('gallery', views.gallery, name='gallery'),
     path('about', views.about, name='about'),
+    path('article', views.article, name='article'),
 ]
