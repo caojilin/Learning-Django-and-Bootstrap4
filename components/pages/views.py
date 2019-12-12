@@ -10,7 +10,6 @@ all_components = [
     'collapse',
     'manga',
     'gallery',
-    'article',
 ]
 
 a = ["shingeki-no-kyojin-chapter-" + str(i) for i in range(1, 124)]
@@ -80,7 +79,3 @@ def gallery(request):
 
 def about(request):
     return render(request, 'pages/about.html', context)
-
-
-def article(request):
-    return render(request, 'pages/article.html', context)
