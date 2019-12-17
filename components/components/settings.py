@@ -25,8 +25,8 @@ SECRET_KEY = '(kw%hi*8y@08c=g2%!+0quhpq##i34vtnh@2*2481+05rmbq(v'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1', '35.174.167.97', 'caojilin.com', 'www.caojilin.com',
-    'ip-172-31-83-62.ec2.internal'
+    '127.0.0.1', '3.86.142.233', 'caojilin.com', 'www.caojilin.com',
+    'ip-172-31-88-244.ec2.internal'
 ]
 
 # Application definition
