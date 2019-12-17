@@ -7,7 +7,8 @@ var fps = 30;
 var pause = false;
 
 function setup() {
-    createCanvas(600, 600);
+    var canvas = createCanvas(600, 600);
+    canvas.parent('sketch-holder');
     cols = floor(width / w);
     rows = floor(height / w);
     for (var j = 0; j < rows; j++) {
@@ -17,30 +18,31 @@ function setup() {
     }
     current = grid[0];
 
+    var sidebar_w = 241;
     frameRate(fps);
     button = createButton('slow down');
-    button.position(650, 100);
+    button.position(sidebar_w+650, 100);
     button.style('font-size', 24 + 'px');
     button.mousePressed(decreaseFPS);
 
     button2 = createButton('speed up');
-    button2.position(650, 150);
+    button2.position(sidebar_w+650, 150);
     button2.style('font-size', 24 + 'px');
     button2.mousePressed(increaseFPS);
 
     button2 = createButton('instant');
-    button2.position(650, 200);
+    button2.position(sidebar_w+650, 200);
     button2.style('font-size', 24 + 'px');
     button2.mousePressed(instant);
 
     inp = createInput('20x20');
-    inp.position(650, 250);
+    inp.position(sidebar_w+650, 250);
     inp.style('font-size', 20 + 'px');
     inp.input(generateNewWorld);
 
     fpsDisplay = createDiv('');
     fpsDisplay.style('font-size', '24pt');
-    fpsDisplay.position(650, 300);
+    fpsDisplay.position(sidebar_w+650, 300);
 }
 
 function mouseClicked() {
