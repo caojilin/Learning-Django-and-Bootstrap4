@@ -31,10 +31,10 @@ class Rocket {
         }
 
         if (this.pos.x < 0) {
-            this.fitness /= 20;
+            this.fitness /= 10;
         }
         if (this.pos.x > width) {
-            this.fitness /= 20;
+            this.fitness /= 10;
         }
         if (this.pos.y < 0) {
             this.fitness /= 20;
