@@ -54,9 +54,11 @@ function setup() {
 
 function increase_barrier(){
     rw += 100;
+    rx -= 50
 }
 
 function decrease_barrier(){
+    rx += 50
     rw -= 100;
 }
 
@@ -73,7 +75,7 @@ function remove_barrier() {
     show_barrier = !show_barrier;
 
     if (show_barrier) {
-        rx = width/2;
+        rx = width/2-150;
         ry = 350;
         rw = 300;
         rh = 10;
@@ -103,7 +105,7 @@ function draw() {
     }
 
     fill(255);
-    rectMode(CENTER);
+//    rectMode(CENTER);
     rect(rx, ry, rw, rh);
     fill(255, 100);
     ellipseMode(CENTER);
