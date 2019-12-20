@@ -1,6 +1,6 @@
 class Rocket {
     constructor(dna) {
-        this.pos = createVector(width / 2, height - 100);
+        this.pos = createVector(width / 2, height - 50);
         this.vel = createVector();
         this.acc = createVector();
         this.completed = false;
@@ -63,7 +63,15 @@ class Rocket {
             this.pos.y < ry + rh
         ) {
             return true
-        } else {
+        }else if (
+            this.pos.x > rx2 &&
+            this.pos.x < rx2 + rw2 &&
+            this.pos.y > ry2 &&
+            this.pos.y < ry2 + rh2
+        ){
+            return true;
+        }
+        else {
             return false;
         }
     }

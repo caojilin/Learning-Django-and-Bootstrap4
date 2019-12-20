@@ -1,4 +1,5 @@
 let population;
+let population_size= 25;
 let target;
 let target_radius = 50;
 let frameCount = 0;
@@ -11,6 +12,7 @@ let successful_hit = 0;
 let successP;
 let deathP;
 
+
 let show_barrier = false;
 
 let rx = 0;
@@ -18,14 +20,19 @@ let ry = 0;
 let rw = 0;
 let rh = 0;
 
+let rx2 = 0;
+let ry2 = 0;
+let rw2 = 0;
+let rh2 = 0;
+
 let button;
 let sidebar_w = 241;
 
 function setup() {
     var canvas = createCanvas(600, 600);
     canvas.parent('sketch-holder');
-    population = new Population(5);
-    target = createVector(width/2, 50);
+    population = new Population(population_size);
+    target = createVector(width / 2, 50);
 
     lifeP = createP();
     lifeP.position(sidebar_w + 650, 100);
@@ -54,29 +61,42 @@ function setup() {
     input_P = createP("popsize: ");
     input_P.position(sidebar_w + 650, 450)
     input_P.style('font-size', 18 + 'px');
-    inp = createInput('5');
+    inp = createInput(population_size.toString());
     inp.position(sidebar_w + 720, 450);
     inp.size(50, 30);
     button4 = createButton('submit');
-    button4.position(sidebar_w+780, 450);
+    button4.position(sidebar_w + 780, 450);
     button4.mousePressed(change_popsize);
 }
 
-function change_popsize(){
+function change_popsize() {
     new_size = parseInt(inp.value());
     population = new Population(new_size);
     frameCount = 0;
     generationCount = 0;
 }
 
-function increase_barrier(){
-    rw += 100;
-    rx -= 50
+function increase_barrier() {
+    // rw += 100;
+    // rx -= 50
+    //
+    // rw2 += 100;
+    // rx2 -= 50
+
+    rw += 50;
+    rx2 -= 50;
+    rw2 += 50;
 }
 
-function decrease_barrier(){
-    rx += 50
-    rw -= 100;
+function decrease_barrier() {
+    // rx += 50
+    // rw -= 100;
+    //
+    // rx2 += 50
+    // rw2 -= 100;
+
+    rw -= 50;
+    rx2 += 50
 }
 
 function change_circle_size() {
@@ -84,23 +104,33 @@ function change_circle_size() {
 }
 
 function remove_barrier() {
-    if(!show_barrier){
+    if (!show_barrier) {
         button.html('remove barrier');
-    }else{
+    } else {
         button.html('add barrier');
     }
     show_barrier = !show_barrier;
 
     if (show_barrier) {
-        rx = width/2-150;
-        ry = 450;
+        rx = width / 2 - 150;
+        ry = 400;
         rw = 300;
         rh = 10;
+
+        rx2 = width / 2 - 150;
+        ry2 = 250;
+        rw2 = 300;
+        rh2 = 10;
     } else {
         rx = 0;
         ry = 0;
         rw = 0;
-        rh = 0
+        rh = 0;
+
+        rx2 = 0;
+        ry2 = 0;
+        rw2 = 0;
+        rh2 = 0;
     }
 }
 
@@ -125,6 +155,7 @@ function draw() {
     fill(255);
 //    rectMode(CENTER);
     rect(rx, ry, rw, rh);
+    rect(rx2, ry2, rw2, rh2);
     fill(255, 100);
     ellipseMode(CENTER);
     ellipse(target.x, target.y, target_radius);
