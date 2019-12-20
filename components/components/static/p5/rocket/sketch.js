@@ -13,10 +13,10 @@ let deathP;
 
 let show_barrier = false;
 
-let rx;
-let ry;
-let rw;
-let rh;
+let rx = 0;
+let ry = 0;
+let rw = 0;
+let rh = 0;
 
 let button;
 let sidebar_w = 241;
@@ -40,6 +40,24 @@ function setup() {
     button.style('font-size', 18 + 'px');
     button.mousePressed(remove_barrier);
 
+    button2 = createButton('increase barier length');
+    button2.position(sidebar_w + 640, 350);
+    button2.style('font-size', 18 + 'px');
+    button2.mousePressed(increase_barrier);
+
+    button3 = createButton('decrease barier length');
+    button3.position(sidebar_w + 640, 400);
+    button3.style('font-size', 18 + 'px');
+    button3.mousePressed(decrease_barrier);
+
+}
+
+function increase_barrier(){
+    rw += 100;
+}
+
+function decrease_barrier(){
+    rw -= 100;
 }
 
 function change_circle_size() {
@@ -53,6 +71,18 @@ function remove_barrier() {
         button.html('add barrier');
     }
     show_barrier = !show_barrier;
+
+    if (show_barrier) {
+        rx = width/2;
+        ry = 350;
+        rw = 300;
+        rh = 10;
+    } else {
+        rx = 0;
+        ry = 0;
+        rw = 0;
+        rh = 0
+    }
 }
 
 function draw() {
@@ -73,17 +103,7 @@ function draw() {
     }
 
     fill(255);
-    if (show_barrier) {
-        rx = 150;
-        ry = 350;
-        rw = 300;
-        rh = 10;
-    } else {
-        rx = 0;
-        ry = 0;
-        rw = 0;
-        rh = 0
-    }
+    rectMode(CENTER);
     rect(rx, ry, rw, rh);
     fill(255, 100);
     ellipseMode(CENTER);
