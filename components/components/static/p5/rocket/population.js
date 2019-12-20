@@ -9,6 +9,16 @@ class Population {
         }
     }
 
+    success(){
+        let successful_hit = 0;
+        for(let i = 0; i < this.popsize; i++){
+            if(this.rockets[i].completed){
+                successful_hit += 1
+            }
+        }
+        return successful_hit;
+    }
+
     evaluate() {
         let maxfit = 0;
         // Iterate through all rockets and calcultes their fitness
@@ -18,8 +28,6 @@ class Population {
                 maxfit = this.rockets[i].fitness;
             }
         }
-        console.log("maxfit" + maxfit);
-
         // Normalises fitnesses
         for (let i = 0; i < this.popsize; i++) {
             this.rockets[i].fitness /= maxfit;
@@ -27,23 +35,13 @@ class Population {
 
         // Take rockets fitness make in to scale of 1 to 100
         // A rocket with high fitness will highly likely will be in the mating pool
+        this.matingpool = [];
         for (let i = 0; i < this.popsize; i++) {
-            let n = 0;
-            if (this.rockets[i].fitness > 0.5 && this.rockets[i].fitness < 0.8) {
-                n = this.rockets[i].fitness * 10;
-
-            } else if (this.rockets[i].fitness > 0.9) {
-                n = this.rockets[i].fitness * 50;
-
-            } else {
-                n = this.rockets[i].fitness * 5;
-            }
+            let n = this.rockets[i].fitness * 100;
             for (let j = 0; j < n; j++) {
                 this.matingpool.push(this.rockets[i]);
             }
         }
-        console.log("matingpoll length" + this.matingpool.length);
-
     }
 
     selection() {

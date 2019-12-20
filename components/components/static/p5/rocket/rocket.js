@@ -23,8 +23,7 @@ class Rocket {
         this.fitness = map(d, 0, width, width, 0);
 
         if (this.completed) {
-            this.fitness *= 10;
-            successful_hit += 1;
+            this.fitness *= 20;
         }
 
         if (this.hitBarrier()) {
@@ -38,7 +37,7 @@ class Rocket {
             this.fitness /= 5;
         }
         if (this.pos.y < 0) {
-            this.fitness /= 1;
+            this.fitness /= 3;
         }
         if (this.pos.y > height) {
             this.fitness /= 20;
@@ -48,7 +47,7 @@ class Rocket {
     show() {
         push();
         noStroke();
-        fill(255, 100);
+        fill(255, 0, 0, 100);
         translate(this.pos.x, this.pos.y);
         rotate(this.vel.heading());
         rectMode(CENTER);
@@ -79,9 +78,9 @@ class Rocket {
 
     update() {
         let d = dist(this.pos.x, this.pos.y, target.x, target.y);
-        if (d < 10) {
+        if (d < target_radius / 2) {
             this.completed = true;
-            this.pos = target.copy();
+            // this.pos = target.copy();
         }
         //check rocket hit barrier
 
