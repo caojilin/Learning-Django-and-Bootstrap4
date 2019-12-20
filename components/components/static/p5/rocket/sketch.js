@@ -24,8 +24,9 @@ let sidebar_w = 241;
 function setup() {
     var canvas = createCanvas(600, 600);
     canvas.parent('sketch-holder');
-    population = new Population();
+    population = new Population(5);
     target = createVector(width/2, 50);
+
     lifeP = createP();
     lifeP.position(sidebar_w + 650, 100);
     generationP = createP();
@@ -36,20 +37,36 @@ function setup() {
     deathP.position(sidebar_w + 650, 250);
 
     button = createButton('add barrier');
-    button.position(sidebar_w + 640, 300);
+    button.position(sidebar_w + 650, 300);
     button.style('font-size', 18 + 'px');
     button.mousePressed(remove_barrier);
 
     button2 = createButton('increase barier length');
-    button2.position(sidebar_w + 640, 350);
+    button2.position(sidebar_w + 650, 350);
     button2.style('font-size', 18 + 'px');
     button2.mousePressed(increase_barrier);
 
     button3 = createButton('decrease barier length');
-    button3.position(sidebar_w + 640, 400);
+    button3.position(sidebar_w + 650, 400);
     button3.style('font-size', 18 + 'px');
     button3.mousePressed(decrease_barrier);
 
+    input_P = createP("popsize: ");
+    input_P.position(sidebar_w + 650, 450)
+    input_P.style('font-size', 18 + 'px');
+    inp = createInput('5');
+    inp.position(sidebar_w + 720, 450);
+    inp.size(50, 30);
+    button4 = createButton('submit');
+    button4.position(sidebar_w+780, 450);
+    button4.mousePressed(change_popsize);
+}
+
+function change_popsize(){
+    new_size = parseInt(inp.value());
+    population = new Population(new_size);
+    frameCount = 0;
+    generationCount = 0;
 }
 
 function increase_barrier(){
@@ -76,7 +93,7 @@ function remove_barrier() {
 
     if (show_barrier) {
         rx = width/2-150;
-        ry = 350;
+        ry = 450;
         rw = 300;
         rh = 10;
     } else {
@@ -95,6 +112,7 @@ function draw() {
     successful_hit = population.success();
     successP.html("successfully hit target: " + successful_hit);
     deathP.html("death rate: " + (1 - successful_hit / population.popsize).toFixed(2));
+
 
     frameCount += 1;
     if (frameCount === lifeSpan) {

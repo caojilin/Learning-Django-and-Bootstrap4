@@ -1,7 +1,7 @@
 class Population {
-    constructor() {
+    constructor(size) {
         this.rockets = [];
-        this.popsize = 100;
+        this.popsize = size;
         this.matingpool = [];
 
         for (let i = 0; i < this.popsize; i++) {
@@ -42,6 +42,7 @@ class Population {
                 this.matingpool.push(this.rockets[i]);
             }
         }
+        console.log(this.matingpool.length);
     }
 
     selection() {
