@@ -55,6 +55,7 @@ class Rocket {
         pop();
     }
 
+
     hitBarrier() {
         if (
             this.pos.x > rx &&
@@ -63,7 +64,12 @@ class Rocket {
             this.pos.y < ry + rh
         ) {
             return true
-        }
+        }else if (
+            this.pos.x > rx2 &&
+            this.pos.x < rx2 + rw2 &&
+            this.pos.y > ry2 &&
+            this.pos.y < ry2 + rh2
+        ){
             return true;
         }
         else {
