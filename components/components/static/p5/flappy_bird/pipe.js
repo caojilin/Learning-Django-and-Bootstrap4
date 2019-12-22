@@ -14,8 +14,8 @@ class Pipe {
   }
 
   hits(bird) {
-    if (bird.y < this.top || bird.y > height - this.bottom) {
-      if (bird.x > this.x && bird.x < this.x + this.w) {
+    if (bird.y-bird.radius < this.top || bird.y - bird.radius > height - this.bottom) {
+      if (bird.x+bird.radius > this.x && bird.x-bird.radius < this.x + this.w) {
         return true;
       }
     }
