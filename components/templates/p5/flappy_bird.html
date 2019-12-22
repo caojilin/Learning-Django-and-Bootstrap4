@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | Flappy Bird {% endblock %}
+
+
+{% block content %}
+
+
+<div id="sketch-holder">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.4/dist/tf.min.js"></script>
+<script src="{% static 'p5/flappy_bird/nn.js' %}"></script>
+<script src="{% static 'p5/flappy_bird/bird.js' %}"></script>
+<script src="{% static 'p5/flappy_bird/pipe.js' %}"></script>
+<script src="{% static 'p5/flappy_bird/ga.js' %}"></script>
+<script src="{% static 'p5/flappy_bird/sketch.js' %}"></script>
+
+{% endblock %}
+

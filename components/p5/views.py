@@ -20,5 +20,10 @@ def game_2048(request):
 def tic_tac_toe(request):
     return render(request, 'p5/tic_tac_toe.html')
 
+
 def maze(request):
     return render(request, 'p5/maze.html')
+
+
+def flappy_bird(request):
+    return render(request, 'p5/flappy_bird.html')

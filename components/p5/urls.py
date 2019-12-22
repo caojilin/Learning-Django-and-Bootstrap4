@@ -7,4 +7,5 @@ urlpatterns = [
     path('game_2048', views.game_2048, name='game_2048'),
     path('tic_tac_toe', views.tic_tac_toe, name='tic_tac_toe'),
     path('maze', views.maze, name='maze'),
+    path('flappy_bird', views.flappy_bird, name='flappy_bird'),
 ]
