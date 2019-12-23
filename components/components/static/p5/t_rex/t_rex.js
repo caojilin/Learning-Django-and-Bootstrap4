@@ -5,14 +5,14 @@ class T_Rex {
         this.y = height - this.r;
         this.velocity = 0;
         this.gravity = 1;
-        this.lift = -15;
+        this.lift = -20;
 
         this.score = 0;
         this.fitness = 0;
         if (brain) {
             this.brain = brain.copy();
         } else {
-            this.brain = new NeuralNetwork(3, 4, 2);
+            this.brain = new NeuralNetwork(5, 8, 2);
         }
 
     }
@@ -26,23 +26,26 @@ class T_Rex {
     }
 
     think(rocks) {
-
-        let closest = rocks[rocks.length - 1];
-        let second_closest = rocks[rocks.length - 2];
-        let d2;
-        if (second_closest === undefined) {
-            d2 = 0;
-        } else {
-            d2 = second_closest.x - (this.x + this.r);
-
+        let closest = null;
+        let closestD = Infinity;
+        for (let i = 0; i < rocks.length; i++) {
+            let d = rocks[i].x + rocks[i].r - this.x;
+            if (d < closestD && d > 0) {
+                closest = rocks[i];
+                closestD = d;
+            }
         }
 
-        let d1 = closest.x - (this.x + this.r);
         let inputs = [];
 
-        inputs[0] = d1 / width;
-        inputs[1] = d2 / width;
-        inputs[2] = closest.velocity / 10;
+        let d = closest.x + closest.r - this.x-this.r;
+
+        inputs[0] = d/width;
+        inputs[1] = this.velocity / 20;
+        inputs[2] = this.y / height;
+        inputs[3] = closest.r / 50;
+        inputs[4] = closest.velocity/10;
+
 
         let output = this.brain.predict(inputs);
         if (output[0] > output[1]) {
@@ -52,33 +55,33 @@ class T_Rex {
 
     show() {
         push();
-        fill(255, 50);
-        stroke('red');
+        fill(255,0,0, 100);
+        // stroke('red');
         rect(this.x, this.y, this.r, this.r);
         // image(t_rex_img, this.x, this.y, this.r, this.r);
         pop();
     }
 
     update() {
-        this.score++;
-
+        // this.score++;
         this.velocity += this.gravity;
         this.y += this.velocity;
         this.y = constrain(this.y, 0, height - this.r);
+        if (this.is_at_bottom()){
+            this.velocity = 0;
+        }
+        // console.log(this.velocity);
     }
 
     jump() {
         if (this.is_at_bottom()) {
-            this.velocity += this.lift;
+            this.velocity = this.lift;
         }
     }
 
     is_at_bottom() {
+        // console.log("here");
         return this.y === height - this.r;
     }
 
-
-    hit(rock) {
-        return collideRectRect(this.x, this.y, this.r, this.r, rock.x, rock.y, rock.r, rock.r);
-    }
 }

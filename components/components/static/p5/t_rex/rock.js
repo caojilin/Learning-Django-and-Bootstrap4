@@ -1,8 +1,9 @@
 class Rock {
     constructor() {
-        this.r = 30;
+        this.r = random(20,50);
         this.x = width;
-        this.y = height - this.r;
+        this.height = 40;
+        this.y = height - this.height;
         this.velocity = random(7,8);
     }
 
@@ -12,7 +13,7 @@ class Rock {
 
     show() {
         fill(0, 100);
-        rect(this.x, this.y, this.r, this.r);
+        rect(this.x, this.y, this.r, this.height);
         // image(rock_img, this.x, this.y);
     }
 

@@ -37,7 +37,10 @@ class Population {
         // A rocket with high fitness will highly likely will be in the mating pool
         this.matingpool = [];
         for (let i = 0; i < this.popsize; i++) {
-            let n = this.rockets[i].fitness * 100;
+            let n = 0;
+            if (this.rockets[i].fitness >= 0.95) {
+                n = this.rockets[i].fitness * 100;
+            }
             for (let j = 0; j < n; j++) {
                 this.matingpool.push(this.rockets[i]);
             }

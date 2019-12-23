@@ -4,7 +4,7 @@ let target;
 let target_radius = 50;
 let frameCount = 0;
 let lifeP;
-let lifeSpan = 600;
+let lifeSpan = 800;
 let maxforce = 0.2;
 let generationP;
 let generationCount = 0;
