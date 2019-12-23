@@ -1,5 +1,4 @@
 function nextGeneration() {
-    console.log('next generation');
     calculateFitness();
     for (let i = 0; i < TOTAL; i++) {
         dinosaurs[i] = pickOne();

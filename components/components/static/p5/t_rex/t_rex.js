@@ -25,26 +25,31 @@ class T_Rex {
         this.brain.mutate(0.1);
     }
 
-    think(rocks) {
+    think(obstacles) {
         let closest = null;
         let closestD = Infinity;
-        for (let i = 0; i < rocks.length; i++) {
-            let d = rocks[i].x + rocks[i].r - this.x;
+        for (let i = 0; i < obstacles.length; i++) {
+            let d = obstacles[i].x + obstacles[i].r - this.x;
             if (d < closestD && d > 0) {
-                closest = rocks[i];
+                closest = obstacles[i];
                 closestD = d;
             }
         }
 
+        if (closest === null) {
+            closest = new Rock(current_rock_speed);
+            rocks.push(closest);
+        }
+
         let inputs = [];
 
-        let d = closest.x + closest.r - this.x-this.r;
+        let d = closest.x + closest.r - this.x - this.r;
 
-        inputs[0] = d/width;
+        inputs[0] = d / width;
         inputs[1] = this.velocity / 20;
         inputs[2] = this.y / height;
         inputs[3] = closest.r / 50;
-        inputs[4] = closest.velocity/10;
+        inputs[4] = closest.velocity / 10;
 
 
         let output = this.brain.predict(inputs);
@@ -55,7 +60,7 @@ class T_Rex {
 
     show() {
         push();
-        fill(255,0,0, 100);
+        fill(255, 0, 0, 100);
         // stroke('red');
         rect(this.x, this.y, this.r, this.r);
         // image(t_rex_img, this.x, this.y, this.r, this.r);
@@ -67,7 +72,7 @@ class T_Rex {
         this.velocity += this.gravity;
         this.y += this.velocity;
         this.y = constrain(this.y, 0, height - this.r);
-        if (this.is_at_bottom()){
+        if (this.is_at_bottom()) {
             this.velocity = 0;
         }
         // console.log(this.velocity);

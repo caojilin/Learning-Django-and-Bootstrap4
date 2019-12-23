@@ -4,7 +4,7 @@ class Rock {
         this.x = width;
         this.height = 40;
         this.y = height - this.height;
-        this.velocity = random(current_rock_speed, current_rock_speed + 1);
+        this.velocity = random(current_rock_speed, current_rock_speed);
     }
 
     update() {

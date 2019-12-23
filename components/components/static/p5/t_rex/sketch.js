@@ -3,11 +3,12 @@ let score = 0;
 let rock_img;
 let t_rex_img;
 let slider;
-let counter = 0;
+let num_generations = 0;
+let spawn = 40;
 // let t_rex;
 
-let current_rock_speed = 7;
-const TOTAL = 100;
+let current_rock_speed = 10;
+const TOTAL = 50;
 let dinosaurs = [];
 let savedDinosaurs = [];
 
@@ -27,15 +28,16 @@ function setup() {
     }
 }
 
+
 function draw() {
     for (let n = 0; n < slider.value(); n++) {
-        if (counter % 50 === 0) {
-            if (score % 50 === 0) {
+        if (frameCount % spawn === 0) {
+            spawn = spawn - 10 + current_rock_speed;
+            if (score % 30 === 0 && score !== 0) {
                 current_rock_speed += 1;
             }
             rocks.push(new Rock(current_rock_speed));
         }
-        counter++;
         for (let i = rocks.length - 1; i >= 0; i--) {
             rocks[i].update();
 
@@ -48,34 +50,42 @@ function draw() {
                 rocks.splice(i, 1);
                 score += 1;
             }
+        }
 
-            if (rocks.length === 0) {
-                rocks.push(new Rock(current_rock_speed));
+        // if (rocks.length === 0) {
+        //     rocks.push(new Rock(current_rock_speed));
+        // }
+
+        for (let t_rex of dinosaurs) {
+            if (rocks.length !== 0) {
+                t_rex.think(rocks);
+                t_rex.update();
             }
 
         }
 
-
-        for (let t_rex of dinosaurs) {
-            t_rex.think(rocks);
-            t_rex.update();
-        }
-
         if (dinosaurs.length === 0) {
-            counter = 0;
+            frameCount = 0;
             score = 0;
             nextGeneration();
             rocks = [];
-            current_rock_speed = 7;
+            current_rock_speed = 10;
+            num_generations += 1;
         }
     }
 
     background(220);
-    textSize(24);
+    textSize(18);
     text('score:' + score, 10, 30);
 
-    textSize(24);
-    text('speed:' + current_rock_speed, 10, 60);
+    textSize(18);
+    text('speed:' + current_rock_speed, 10, 48);
+
+    textSize(18);
+    text('generations:' + num_generations, 10, 66);
+
+    textSize(18);
+    text('alive rate:' + (dinosaurs.length / TOTAL).toFixed(2), 10, 84);
 
     for (let rock of rocks) {
         rock.show();
