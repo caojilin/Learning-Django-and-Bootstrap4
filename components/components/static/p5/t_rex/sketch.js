@@ -6,6 +6,7 @@ let slider;
 let counter = 0;
 // let t_rex;
 
+let current_rock_speed = 7;
 const TOTAL = 100;
 let dinosaurs = [];
 let savedDinosaurs = [];
@@ -28,8 +29,11 @@ function setup() {
 
 function draw() {
     for (let n = 0; n < slider.value(); n++) {
-        if (counter % 50 == 0) {
-            rocks.push(new Rock());
+        if (counter % 50 === 0) {
+            if (score % 50 === 0) {
+                current_rock_speed += 1;
+            }
+            rocks.push(new Rock(current_rock_speed));
         }
         counter++;
         for (let i = rocks.length - 1; i >= 0; i--) {
@@ -71,8 +75,6 @@ function draw() {
         t_rex.show();
     }
 }
-
-
 
 
 // function setup() {
