@@ -66,6 +66,7 @@ function draw() {
             score = 0;
             nextGeneration();
             rocks = [];
+            current_rock_speed = 7;
         }
     }
 
