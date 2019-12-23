@@ -9,8 +9,8 @@ def index(request):
     return render(request, 'p5/p5index.html')
 
 
-def unicorn(request):
-    return render(request, 'p5/unicorn.html')
+def t_rex(request):
+    return render(request, 'p5/t_rex.html')
 
 
 def game_2048(request):

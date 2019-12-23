@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<p>Nothing here now</p>
+
 <div id="myContainer">
 </div>
+<script>
+    var rock_image_url = "{% static 'p5/t_rex/rock.png' %}";
+    var t_rex_image_url = "{% static 'p5/t_rex/t_rex.jpg' %}";
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/addons/p5.sound.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/bmoren/p5.collide2D/p5.collide2d.min.js"></script>
-<script src="https://unpkg.com/ml5@0.3.1/dist/ml5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.4/dist/tf.min.js"></script>
 
-<script src="{% static 'p5/unicorn/sketch.js' %}"></script>
-<script src="{% static 'p5/unicorn/unicorn.js' %}"></script>
-<script src="{% static 'p5/unicorn/train.js' %}"></script>
+<script src="{% static 'p5/t_rex/sketch.js' %}"></script>
+<script src="{% static 'p5/t_rex/t_rex.js' %}"></script>
+<script src="{% static 'p5/t_rex/rock.js' %}"></script>
+<script src="{% static 'p5/t_rex/nn.js' %}"></script>
+<script src="{% static 'p5/t_rex/ga.js' %}"></script>
+
 
 {% endblock %}

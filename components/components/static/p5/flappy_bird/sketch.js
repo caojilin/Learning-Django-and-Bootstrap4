@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// Neuro-Evolution Flappy Bird with TensorFlow.js
-// http://thecodingtrain.com
-// https://youtu.be/cdUNkwXx-I4
-
 const TOTAL = 100;
 let birds = [];
 let savedBirds = [];

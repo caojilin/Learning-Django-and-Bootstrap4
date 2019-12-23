@@ -1,35 +1,84 @@
 class T_Rex {
-    constructor() {
-      this.r = 50;
-      this.x = 50;
-      this.y = height - this.r;
-      this.vy = 0;
-      this.gravity = 3;
+    constructor(brain) {
+        this.r = 30;
+        this.x = 10;
+        this.y = height - this.r;
+        this.velocity = 0;
+        this.gravity = 1;
+        this.lift = -15;
+
+        this.score = 0;
+        this.fitness = 0;
+        if (brain) {
+            this.brain = brain.copy();
+        } else {
+            this.brain = new NeuralNetwork(3, 4, 2);
+        }
+
     }
-  
-    jump() {
-      if (this.y == height - this.r) {
-        this.vy = -35;
-      }
+
+    dispose() {
+        this.brain.dispose();
     }
-  
-    hits(train) {
-      let x1 = this.x + this.r * 0.5;
-      let y1 = this.y + this.r * 0.5;
-      let x2 = train.x + train.r * 0.5;
-      let y2 = train.y + train.r * 0.5;
-      return collideCircleCircle(x1, y1, this.r, x2, y2, train.r);
+
+    mutate() {
+        this.brain.mutate(0.1);
     }
-  
-    move() {
-      this.y += this.vy;
-      this.vy += this.gravity;
-      this.y = constrain(this.y, 0, height - this.r);
+
+    think(rocks) {
+
+        let closest = rocks[rocks.length - 1];
+        let second_closest = rocks[rocks.length - 2];
+        let d2;
+        if (second_closest === undefined) {
+            d2 = 0;
+        } else {
+            d2 = second_closest.x - (this.x + this.r);
+
+        }
+
+        let d1 = closest.x - (this.x + this.r);
+        let inputs = [];
+
+        inputs[0] = d1 / width;
+        inputs[1] = d2 / width;
+        inputs[2] = closest.velocity / 10;
+
+        let output = this.brain.predict(inputs);
+        if (output[0] > output[1]) {
+            this.jump();
+        }
     }
-  
+
     show() {
-      fill(255, 50);
-      ellipseMode(CORNER);
-      ellipse(this.x, this.y,this.r);
+        push();
+        fill(255, 50);
+        stroke('red');
+        rect(this.x, this.y, this.r, this.r);
+        // image(t_rex_img, this.x, this.y, this.r, this.r);
+        pop();
     }
-  }
+
+    update() {
+        this.score++;
+
+        this.velocity += this.gravity;
+        this.y += this.velocity;
+        this.y = constrain(this.y, 0, height - this.r);
+    }
+
+    jump() {
+        if (this.is_at_bottom()) {
+            this.velocity += this.lift;
+        }
+    }
+
+    is_at_bottom() {
+        return this.y === height - this.r;
+    }
+
+
+    hit(rock) {
+        return collideRectRect(this.x, this.y, this.r, this.r, rock.x, rock.y, rock.r, rock.r);
+    }
+}

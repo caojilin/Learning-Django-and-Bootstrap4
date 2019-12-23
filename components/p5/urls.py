@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('p5index', views.index, name='p5index'),
-    path('unicorn', views.unicorn, name='unicorn'),
+    path('t_rex', views.t_rex, name='t_rex'),
     path('game_2048', views.game_2048, name='game_2048'),
     path('tic_tac_toe', views.tic_tac_toe, name='tic_tac_toe'),
     path('maze', views.maze, name='maze'),
