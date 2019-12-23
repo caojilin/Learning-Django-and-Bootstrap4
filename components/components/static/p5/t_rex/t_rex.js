@@ -5,7 +5,7 @@ class T_Rex {
         this.y = height - this.r;
         this.velocity = 0;
         this.gravity = 1;
-        this.lift = -20;
+        this.lift = -17;
 
         this.score = 0;
         this.fitness = 0;
@@ -36,10 +36,10 @@ class T_Rex {
             }
         }
 
-//        if (closest === null) {
-//            closest = new Rock(current_rock_speed);
-//            rocks.push(closest);
-//        }
+        if (closest === null) {
+            closest = new Rock(current_rock_speed);
+            rocks.push(closest);
+        }
 
         let inputs = [];
 

@@ -1,6 +1,6 @@
 class Rock {
     constructor(velocity) {
-        this.r = random(20, 60);
+        this.r = random(20, 70);
         this.x = 2*width;
         this.height = 40;
         this.y = height - this.height;

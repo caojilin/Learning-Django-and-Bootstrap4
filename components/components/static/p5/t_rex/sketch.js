@@ -8,7 +8,7 @@ let spawn = 60;
 // let t_rex;
 
 let current_rock_speed = 10;
-const TOTAL = 100;
+const TOTAL = 50;
 let dinosaurs = [];
 let savedDinosaurs = [];
 
@@ -36,7 +36,7 @@ function draw() {
             if (score % 20 === 0 && score !== 0) {
                 current_rock_speed += 1;
             }
-            if (current_rock_speed === 20) {
+            if (current_rock_speed >= 20) {
                 current_rock_speed = 20;
             }
             rocks.push(new Rock(current_rock_speed));
