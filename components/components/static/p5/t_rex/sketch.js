@@ -8,7 +8,7 @@ let spawn = 40;
 // let t_rex;
 
 let current_rock_speed = 10;
-const TOTAL = 50;
+const TOTAL = 100;
 let dinosaurs = [];
 let savedDinosaurs = [];
 
