@@ -7,7 +7,7 @@ class Bird {
   constructor(brain) {
     this.y = height / 2;
     this.x = 64;
-    this.radius = 32;
+    this.radius = 16;
     this.gravity = 0.8;
     this.lift = -12;
     this.velocity = 0;
