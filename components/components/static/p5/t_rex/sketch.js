@@ -33,8 +33,11 @@ function draw() {
     for (let n = 0; n < slider.value(); n++) {
         if (frameCount % spawn === 0) {
             // spawn = spawn - 10 + current_rock_speed;
-            if (score % 30 === 0 && score !== 0) {
+            if (score % 20 === 0 && score !== 0) {
                 current_rock_speed += 1;
+            }
+            if (current_rock_speed === 20) {
+                current_rock_speed = 20;
             }
             rocks.push(new Rock(current_rock_speed));
         }
@@ -71,6 +74,8 @@ function draw() {
     }
 
     background(220);
+
+    push();
     textSize(18);
     text('score:' + score, 10, 30);
 
@@ -82,6 +87,7 @@ function draw() {
 
     textSize(18);
     text('alive rate:' + (dinosaurs.length / TOTAL).toFixed(2), 10, 84);
+    pop();
 
     for (let rock of rocks) {
         rock.show();
