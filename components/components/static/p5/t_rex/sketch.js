@@ -4,7 +4,7 @@ let rock_img;
 let t_rex_img;
 let slider;
 let num_generations = 0;
-let spawn = 40;
+let spawn = 70;
 // let t_rex;
 
 let current_rock_speed = 10;
@@ -32,7 +32,7 @@ function setup() {
 function draw() {
     for (let n = 0; n < slider.value(); n++) {
         if (frameCount % spawn === 0) {
-            spawn = spawn - 10 + current_rock_speed;
+            // spawn = spawn - 10 + current_rock_speed;
             if (score % 30 === 0 && score !== 0) {
                 current_rock_speed += 1;
             }
