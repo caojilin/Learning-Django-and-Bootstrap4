@@ -1,7 +1,7 @@
 class Rock {
     constructor(velocity) {
         this.r = random(20, 50);
-        this.x = width;
+        this.x = 2*width;
         this.height = 40;
         this.y = height - this.height;
         this.velocity = random(current_rock_speed, current_rock_speed);

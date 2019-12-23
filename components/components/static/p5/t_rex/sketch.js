@@ -4,7 +4,7 @@ let rock_img;
 let t_rex_img;
 let slider;
 let num_generations = 0;
-let spawn = 70;
+let spawn = 60;
 // let t_rex;
 
 let current_rock_speed = 10;
@@ -51,10 +51,6 @@ function draw() {
                 score += 1;
             }
         }
-
-        // if (rocks.length === 0) {
-        //     rocks.push(new Rock(current_rock_speed));
-        // }
 
         for (let t_rex of dinosaurs) {
             if (rocks.length !== 0) {

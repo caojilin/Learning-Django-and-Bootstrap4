@@ -36,10 +36,10 @@ class T_Rex {
             }
         }
 
-        if (closest === null) {
-            closest = new Rock(current_rock_speed);
-            rocks.push(closest);
-        }
+//        if (closest === null) {
+//            closest = new Rock(current_rock_speed);
+//            rocks.push(closest);
+//        }
 
         let inputs = [];
 
