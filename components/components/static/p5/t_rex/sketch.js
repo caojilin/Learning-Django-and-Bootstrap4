@@ -48,6 +48,11 @@ function draw() {
                 rocks.splice(i, 1);
                 score += 1;
             }
+
+            if (rocks.length === 0) {
+                rocks.push(new Rock(current_rock_speed));
+            }
+
         }
 
 
@@ -67,6 +72,9 @@ function draw() {
     background(220);
     textSize(24);
     text('score:' + score, 10, 30);
+
+    textSize(24);
+    text('speed:' + current_rock_speed, 10, 60);
 
     for (let rock of rocks) {
         rock.show();
