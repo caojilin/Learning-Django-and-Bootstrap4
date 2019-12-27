@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | Flappy Bird {% endblock %}
+
+
+{% block content %}
+
+
+<div id="sketch-holder">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+<script src="https://unpkg.com/matter-js@0.14.2/build/matter.min.js"></script>
+
+<script src="{% static 'p5/angry_bird/slingshot.js' %}"></script>
+<script src="{% static 'p5/angry_bird/bird.js' %}"></script>
+<script src="{% static 'p5/angry_bird/box.js' %}"></script>
+<script src="{% static 'p5/angry_bird/ground.js' %}"></script>
+<script src="{% static 'p5/angry_bird/sketch.js' %}"></script>
+
+{% endblock %}
+

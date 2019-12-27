@@ -14,7 +14,6 @@ class T_Rex {
         } else {
             this.brain = new NeuralNetwork(5, 8, 2);
         }
-
     }
 
     dispose() {

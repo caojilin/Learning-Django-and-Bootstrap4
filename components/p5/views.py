@@ -27,3 +27,6 @@ def maze(request):
 
 def flappy_bird(request):
     return render(request, 'p5/flappy_bird.html')
+
+def angry_bird(request):
+    return render(request, 'p5/angry_bird.html')
