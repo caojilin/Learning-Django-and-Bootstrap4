@@ -3,7 +3,7 @@ let gameover = false;
 let result;
 
 function setup() {
-    var canvas = createCanvas(600, 600);
+    var canvas = createCanvas(390, 390);
     canvas.parent('sketch-holder');
     game = new Game();
 }

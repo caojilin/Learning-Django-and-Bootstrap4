@@ -20,7 +20,7 @@ class Rocket {
     calcFitness() {
         let d = dist(this.pos.x, this.pos.y, target.x, target.y);
 
-        this.fitness = map(d, 0, width, width, 0) + 0.5*frameCount;
+        this.fitness = map(d, 0, width, width, 0) + 0.5*Count;
 
         if (this.completed) {
             this.fitness *= 30;
@@ -64,16 +64,6 @@ class Rocket {
             this.pos.y < ry + rh
         ) {
             return true
-        }else if (
-            this.pos.x > rx2 &&
-            this.pos.x < rx2 + rw2 &&
-            this.pos.y > ry2 &&
-            this.pos.y < ry2 + rh2
-        ){
-            return true;
-        }
-        else {
-            return false;
         }
     }
 
@@ -101,7 +91,7 @@ class Rocket {
             this.crashed = true;
         }
 
-        this.applyforce(this.dna.genes[frameCount]);
+        this.applyforce(this.dna.genes[Count]);
 
         if (!this.completed && !this.crashed) {
             this.vel.add(this.acc);

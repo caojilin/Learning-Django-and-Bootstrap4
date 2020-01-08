@@ -1,11 +1,11 @@
 let population;
 let population_size= 25;
 let target;
-let target_radius = 50;
-let frameCount = 0;
+let target_radius = 40;
+let Count = 0;
 let lifeP;
-let lifeSpan = 800;
-let maxforce = 0.2;
+let lifeSpan = 400;
+let maxforce = 0.3;
 let generationP;
 let generationCount = 0;
 let successful_hit = 0;
@@ -20,11 +20,6 @@ let ry = 0;
 let rw = 0;
 let rh = 0;
 
-let rx2 = 0;
-let ry2 = 0;
-let rw2 = 0;
-let rh2 = 0;
-
 let button;
 let sidebar_w = 241;
 
@@ -34,70 +29,46 @@ function setup() {
     population = new Population(population_size);
     target = createVector(width / 2, 50);
 
+    html_height_positions = [150, 200, 250, 300, 350, 400, 450]
+
     lifeP = createP();
-    lifeP.position(sidebar_w + 650, 100);
+    lifeP.parent('sketch-holder');
+    lifeP.position(sidebar_w + 650, html_height_positions[0]);
     generationP = createP();
-    generationP.position(sidebar_w + 650, 150);
+    generationP.position(sidebar_w + 650, html_height_positions[1]);
     successP = createP();
-    successP.position(sidebar_w + 650, 200);
+    successP.position(sidebar_w + 650, html_height_positions[2]);
     deathP = createP();
-    deathP.position(sidebar_w + 650, 250);
+    deathP.position(sidebar_w + 650, html_height_positions[3]);
 
     button = createButton('add barrier');
-    button.position(sidebar_w + 650, 300);
+    button.position(sidebar_w + 650, html_height_positions[4]);
     button.style('font-size', 18 + 'px');
     button.mousePressed(remove_barrier);
 
-    button2 = createButton('increase barier length');
-    button2.position(sidebar_w + 650, 350);
-    button2.style('font-size', 18 + 'px');
-    button2.mousePressed(increase_barrier);
-
-    button3 = createButton('decrease barier length');
-    button3.position(sidebar_w + 650, 400);
-    button3.style('font-size', 18 + 'px');
-    button3.mousePressed(decrease_barrier);
-
     input_P = createP("popsize: ");
-    input_P.position(sidebar_w + 650, 450)
+    input_P.position(sidebar_w + 650, html_height_positions[5])
     input_P.style('font-size', 18 + 'px');
     inp = createInput(population_size.toString());
-    inp.position(sidebar_w + 720, 450);
+    inp.position(sidebar_w + 720, html_height_positions[5]);
     inp.size(50, 30);
     button4 = createButton('submit');
-    button4.position(sidebar_w + 780, 450);
+    button4.position(sidebar_w + 780, html_height_positions[5]);
     button4.mousePressed(change_popsize);
 }
 
 function change_popsize() {
     new_size = parseInt(inp.value());
     population = new Population(new_size);
-    frameCount = 0;
+    Count = 0;
     generationCount = 0;
 }
 
 function increase_barrier() {
-    // rw += 100;
-    // rx -= 50
-    //
-    // rw2 += 100;
-    // rx2 -= 50
-
+    rx -= 25;
     rw += 50;
-    rx2 -= 50;
-    rw2 += 50;
 }
 
-function decrease_barrier() {
-    // rx += 50
-    // rw -= 100;
-    //
-    // rx2 += 50
-    // rw2 -= 100;
-
-    rw -= 50;
-    rx2 += 50
-}
 
 function change_circle_size() {
 
@@ -112,50 +83,38 @@ function remove_barrier() {
     show_barrier = !show_barrier;
 
     if (show_barrier) {
-        rx = width / 2 - 150;
+        rx = width / 2 - 200;
         ry = 400;
-        rw = 300;
+        rw = 400;
         rh = 10;
-
-        rx2 = width / 2 - 150;
-        ry2 = 250;
-        rw2 = 300;
-        rh2 = 10;
     } else {
         rx = 0;
         ry = 0;
         rw = 0;
         rh = 0;
-
-        rx2 = 0;
-        ry2 = 0;
-        rw2 = 0;
-        rh2 = 0;
     }
 }
 
 function draw() {
     background(0);
     population.run();
-    lifeP.html("lifespan: " + frameCount);
+    lifeP.html("lifespan: " + Count);
     generationP.html("generations: " + generationCount);
     successful_hit = population.success();
     successP.html("successfully hit target: " + successful_hit);
     deathP.html("death rate: " + (1 - successful_hit / population.popsize).toFixed(2));
 
 
-    frameCount += 1;
-    if (frameCount === lifeSpan) {
+    Count += 1;
+    if (Count === lifeSpan) {
         population.evaluate();
         population.selection();
-        frameCount = 0;
+        Count = 0;
         generationCount += 1;
     }
 
     fill(255);
-//    rectMode(CENTER);
     rect(rx, ry, rw, rh);
-    rect(rx2, ry2, rw2, rh2);
     fill(255, 100);
     ellipseMode(CENTER);
     ellipse(target.x, target.y, target_radius);

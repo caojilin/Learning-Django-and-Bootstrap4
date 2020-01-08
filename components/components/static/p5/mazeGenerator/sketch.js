@@ -20,29 +20,25 @@ function setup() {
 
     var sidebar_w = 241;
     frameRate(fps);
-    button = createButton('slow down');
-    button.position(sidebar_w+650, 100);
-    button.style('font-size', 24 + 'px');
-    button.mousePressed(decreaseFPS);
 
-    button2 = createButton('speed up');
-    button2.position(sidebar_w+650, 150);
-    button2.style('font-size', 24 + 'px');
-    button2.mousePressed(increaseFPS);
-
-    button2 = createButton('instant');
-    button2.position(sidebar_w+650, 200);
-    button2.style('font-size', 24 + 'px');
-    button2.mousePressed(instant);
-
-    inp = createInput('20x20');
-    inp.position(sidebar_w+650, 250);
-    inp.style('font-size', 20 + 'px');
-    inp.input(generateNewWorld);
+    inp1 = createInput('fps:30');
+    inp1.position(sidebar_w+650, 150);
+    inp1.style('font-size', 20 + 'px');
+    inp1.input(changeFPS);
 
     fpsDisplay = createDiv('');
-    fpsDisplay.style('font-size', '24pt');
-    fpsDisplay.position(sidebar_w+650, 300);
+    fpsDisplay.style('font-size', '18pt');
+    fpsDisplay.position(sidebar_w+650, 200);
+
+    inp2 = createInput('size:20x20');
+    inp2.position(sidebar_w+650, 250);
+    inp2.style('font-size', 20 + 'px');
+    inp2.input(generateNewWorld);
+
+    button2 = createButton('instant');
+    button2.position(sidebar_w+650, 300);
+    button2.style('font-size', 24 + 'px');
+    button2.mousePressed(instant);
 }
 
 function mouseClicked() {
@@ -76,11 +72,11 @@ function instant() {
 }
 
 function generateNewWorld() {
-    if (this.value() == ''){
+    if (inp2.value() == ''){
         noLoop();
     }else {
         loop();
-        w = floor(width/this.value());
+        w = floor(width/inp2.value());
         grid = [];
         cols = floor(width / w);
         rows = floor(height / w);
@@ -96,20 +92,10 @@ function generateNewWorld() {
 
 }
 
-function decreaseFPS() {
-    fps -= 15;
-    if (fps <= 1){
-        fps = 5;
-    }
-    frameRate(fps);
 
-}
-
-function increaseFPS() {
-    fps += 15;
-    if (fps >= 120){
-        fps = 120;
-    }
+function changeFPS() {
+    console.log(inp1.value());
+    fps = parseInt(inp1.value());
     frameRate(fps);
 }
 
