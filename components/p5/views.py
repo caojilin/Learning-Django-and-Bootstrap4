@@ -30,3 +30,6 @@ def flappy_bird(request):
 
 def angry_bird(request):
     return render(request, 'p5/angry_bird.html')
+
+def smart_rocket(request):
+    return render(request, 'p5/smart_rocket.html')

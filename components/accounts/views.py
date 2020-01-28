@@ -91,6 +91,9 @@ def logout(request):
 def dashboard(request):
     # album = Album.objects.order_by('-list_date')
 
+    album1 = [str(i) for i in list(range(1, 4))]
+    album2 = [str(i) for i in list(range(1, 8))]
+
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -98,5 +101,21 @@ def dashboard(request):
             return redirect('dashboard')
     else:
         form = UploadFileForm()
-    this_context = {'all_components': all_components, 'form': form}
+
+    this_context = {'all_components': all_components, 'form': form,
+                    'album1': album1,'album2': album2}
     return render(request, 'accounts/dashboard.html', this_context)
+
+@csrf_protect
+def manage(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('manage')
+    else:
+        form = UploadFileForm()
+
+    this_context = {'all_components': all_components, 'form': form}
+
+    return render(request, 'accounts/manage.html', this_context)

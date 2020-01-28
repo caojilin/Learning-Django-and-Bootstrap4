@@ -9,4 +9,5 @@ urlpatterns = [
     path('maze', views.maze, name='maze'),
     path('flappy_bird', views.flappy_bird, name='flappy_bird'),
     path('angry_bird', views.angry_bird, name='angry_bird'),
+    path('smart_rocket', views.smart_rocket, name='smart_rocket'),
 ]

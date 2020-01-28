@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | User Management {% endblock %}
+
+{% block content %}
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Manage</li>
+    <li class="breadcrumb-item"> <a href="{% url 'dashboard' %}">Dashboard</a></li>
+</ul>
+
+
+<h2>Welcome {{ user.first_name }}</h2>
+<h3>Manage</h3>
+<hr>
+
+
+<h2>Upload files</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+
+{% endblock %}

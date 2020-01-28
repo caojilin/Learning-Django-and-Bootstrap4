@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | Smart Rocket {% endblock %}
+
+
+{% block content %}
+
+<script src="{% static 'p5/mazeGenerator/sketch.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+
+
+<p>implemented the algorithm <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm"> on wikipedia</a></p>
+<div id="sketch-holder">
+</div>
+
+{% endblock %}
+

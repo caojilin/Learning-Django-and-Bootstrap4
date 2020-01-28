@@ -1,77 +1,132 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<div class="card-deck">
-    <div class="card">
-        <img src="{% static 'img/p5index/t_rex.png' %}" class="card-img" alt="...">
-        <div class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">T-Rex</h5>
-                <p class="card-text">T-rex game</p>
-                <a href="{% url 't_rex' %}" class="btn btn-primary">link</a>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="{% static 'img/p5index/2048.png' %}" class="card-img" alt="...">
-        <div class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">2048</h5>
-                <p class="card-text">game</p>
-                <a href="{% url 'game_2048' %}" class="btn btn-primary">link</a>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/t_rex.png' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">T-Rex</h5>
+                    <p class="card-text">T-rex game</p>
+                    <a href="{% url 't_rex' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <img src="{% static 'img/p5index/tic_tac_toe.jpeg' %}" class="card-img" alt="...">
-        <div class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">tic tac toe</h5>
-                <p class="card-text">game</p>
-                <a href="{% url 'tic_tac_toe' %}" class="btn btn-primary">link</a>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="{% static 'img/p5index/flappy.png' %}" class="card-img" alt="...">
-        <div class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">flappy bird</h5>
-                <p class="card-text">game</p>
-                <a href="{% url 'flappy_bird' %}" class="btn btn-primary">link</a>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/2048.png' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">2048</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'game_2048' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <img src="{% static 'img/p5index/angry_bird.jpg' %}" class="card-img" alt="...">
-        <div class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">angry bird</h5>
-                <p class="card-text">game</p>
-                <a href="{% url 'angry_bird' %}" class="btn btn-primary">link</a>
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/tic_tac_toe.jpeg' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">tic tac toe</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'tic_tac_toe' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
             </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/flappy.png' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">flappy bird</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'flappy_bird' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/angry_bird.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Angry Bird</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'angry_bird' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/rocket.png' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Smart Rocket</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'smart_rocket' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <img src="{% static 'img/p5index/maze.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Maze Generator</h5>
+                    <p class="card-text">game</p>
+                    <a href="{% url 'maze' %}" class="btn btn-primary">link</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+    </div>
+
+    <div class="col">
+    </div>
+
+    <div class="col">
+    </div>
+</div>
+
+
 {% endblock %}
+
+</div>
