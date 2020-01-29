@@ -1,122 +1,145 @@
-// Daniel Shiffman
-// http://codingtra.in
-// http://patreon.com/codingtrain
-
-// 2048
-// https://youtu.be/JSn-DJU8qf0
-// https://youtu.be/8f8P1i0W26E
-// https://youtu.be/3iYvT8TBIro
-// https://youtu.be/vtMKeEGpMI4
-
 let grid;
-let grid_new;
 let score = 0;
 
 function setup() {
-  var canvas = createCanvas(400, 400);
-  canvas.parent('sketch-holder');
-  noLoop();
-  grid = blankGrid();
-  grid_new = blankGrid();
-  // console.table(grid);
-  addNumber();
-  addNumber();
-  updateCanvas();
-}
-
-// One "move"
-function keyPressed() {
-  let flipped = false;
-  let rotated = false;
-  let played = true;
-  switch (keyCode) {
-    case DOWN_ARROW:
-      // do nothing
-      break;
-    case UP_ARROW:
-      grid = flipGrid(grid);
-      flipped = true;
-      break;
-    case RIGHT_ARROW:
-      grid = transposeGrid(grid);
-      rotated = true;
-      break;
-    case LEFT_ARROW:
-      grid = transposeGrid(grid);
-      grid = flipGrid(grid);
-      rotated = true;
-      flipped = true;
-      break;
-    default:
-      played = false;
-  }
-
-  if (played) {
-    let past = copyGrid(grid);
-    for (let i = 0; i < 4; i++) {
-      grid[i] = operate(grid[i]);
-    }
-    let changed = compare(past, grid);
-    if (flipped) {
-      grid = flipGrid(grid);
-    }
-    if (rotated) {
-      grid = transposeGrid(grid);
-    }
-    if (changed) {
-      addNumber();
-    }
+    let canvas = createCanvas(600, 600);
+    canvas.parent("sketch-holder");
+    noLoop();
+    grid = new Grid();
+    grid.addNumber();
+    grid.addNumber();
     updateCanvas();
-
-    let gameover = isGameOver();
-    if (gameover) {
-      console.log("GAME OVER");
-    }
-
-    let gamewon = isGameWon();
-    if (gamewon) {
-      console.log("GAME WON");
-    }
-
-  }
 }
 
 function updateCanvas() {
-  background(255);
-  drawGrid();
-  select('#score').html(score);
+    background(255);
+    grid.show();
+    select('#score').html(score);
 }
 
-function drawGrid() {
-  let w = 100;
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      noFill();
-      strokeWeight(2);
-      let val = grid[i][j];
-      let s = val.toString();
-      if (grid_new[i][j] === 1) {
-        stroke(200, 0, 200);
-        strokeWeight(16);
-        grid_new[i][j] = 0;
-      } else {
-        strokeWeight(4);
-        stroke(0);
-      }
-
-      if (val != 0) {
-        fill(colorsSizes[s].color);
-      } else {
-        noFill();
-      }
-      rect(i * w, j * w, w, w, 30);
-      if (val !== 0) {
-        textAlign(CENTER, CENTER);
-        noStroke();
-        fill(0);
-        textSize(colorsSizes[s].size);
-        text(val, i * w + w / 2, j * w + w / 2);
-      }
+function combine(row) {
+    for (let i = row.length; i >= 1; i--) {
+        if (row[i] === row[i - 1]) {
+            row[i] = row[i - 1] + row[i];
+            score += row[i];
+            row[i - 1] = 0;
+        }
     }
-  }
+    return row
 }
+
+function slide(row) {
+    let arr = row.filter(val => val);
+    let missing = row.length - arr.length;
+    let zeros = Array(missing).fill(0);
+    return zeros.concat(arr);
+}
+
+function operate(board) {
+    for (let i = 0; i < board.length; i++) {
+        board[i] = slide(board[i]);
+        board[i] = combine(board[i]);
+        board[i] = slide(board[i]);
+    }
+    return board;
+}
+
+function gridFlip(board) {
+    for (let i = 0; i < board.length; i++) {
+        board[i].reverse();
+    }
+    return board;
+}
+
+function gridRotate(board) {
+    newBoard = grid.makeEmpty();
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            newBoard[i][j] = board[j][i];
+        }
+    }
+    return newBoard;
+}
+
+function copyGrid(board) {
+    let newArray = [];
+    for (let i = 0; i < board.length; i++) {
+        newArray[i] = board[i].slice();
+    }
+    return newArray;
+}
+
+function gridEqual(a, b) {
+    for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < a[0].length; j++) {
+            if (a[i][j] !== b[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function gameWon() {
+    for (let i = 0; i < grid.num_row; i++) {
+        for (let j = 0; j < grid.num_row; j++) {
+            if (grid.board[i][j] === 2048){
+                return true
+            }
+        }
+    }
+    return false;
+}
+
+function isGameOver() {
+    for (let i = 0; i < grid.num_row; i++) {
+        for (let j = 0; j < grid.num_row; j++) {
+            if (grid.board[i][j] === 0) {
+                return false;
+            }
+            if (j !== 3 && grid.board[i][j] === grid.board[i][j + 1]) {
+                return false;
+            }
+            if (i !== 3 && grid.board[i][j] === grid.board[i + 1][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function keyPressed() {
+    let past_board = copyGrid(grid.board);
+
+    if (keyCode === DOWN_ARROW) {
+        grid.board = operate(grid.board);
+    } else if (keyCode === UP_ARROW) {
+        grid.board = gridFlip(grid.board);
+        grid.board = operate(grid.board);
+        grid.board = gridFlip(grid.board);
+    } else if (keyCode === RIGHT_ARROW) {
+        grid.board = gridRotate(grid.board);
+        grid.board = operate(grid.board);
+        grid.board = gridRotate(grid.board);
+    } else if (keyCode === LEFT_ARROW) {
+        grid.board = gridRotate(grid.board);
+        grid.board = gridFlip(grid.board);
+        grid.board = operate(grid.board);
+        grid.board = gridFlip(grid.board);
+        grid.board = gridRotate(grid.board);
+    }
+    // if board not moved, don't add new number
+    if (!gridEqual(past_board, grid.board)) {
+        grid.addNumber();
+    }
+
+    updateCanvas();
+
+    if (isGameOver()) {
+        console.log("Game Over");
+    }
+    if (gameWon()){
+        console.log("Game Won");
+    }
+}
+

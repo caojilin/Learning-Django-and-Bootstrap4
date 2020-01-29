@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{% include 'partials/_alerts.html' %}
+
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+<button onclick="TogetherJS(this); return false;">Start TogetherJS</button>
 
 <div class="container"> <!-- container -->
     <div class="body-content row" id="youtube-example">
