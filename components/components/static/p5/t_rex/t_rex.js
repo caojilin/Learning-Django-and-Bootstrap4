@@ -14,6 +14,8 @@ class T_Rex {
         } else {
             this.brain = new NeuralNetwork(5, 8, 2);
         }
+
+        this.prediction = null;
     }
 
     dispose() {
@@ -52,9 +54,14 @@ class T_Rex {
 
 
         let output = this.brain.predict(inputs);
+        this.prediction = output;
         if (output[0] > output[1]) {
             this.jump();
         }
+    }
+
+    print_prediction() {
+        console.log(this.prediction);
     }
 
     show() {
@@ -74,7 +81,6 @@ class T_Rex {
         if (this.is_at_bottom()) {
             this.velocity = 0;
         }
-        // console.log(this.velocity);
     }
 
     jump() {

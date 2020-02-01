@@ -1,14 +1,14 @@
 let rocks = [];
 let score = 0;
-let rock_img;
-let t_rex_img;
+// let rock_img;
+// let t_rex_img;
 let slider;
 let num_generations = 0;
-let spawn = 60;
+let spawn = 50;
 // let t_rex;
 
-let current_rock_speed = 10;
-const TOTAL = 50;
+let current_rock_speed = 7;
+const TOTAL = 25;
 let dinosaurs = [];
 let savedDinosaurs = [];
 
@@ -31,14 +31,15 @@ function setup() {
 
 function draw() {
     for (let n = 0; n < slider.value(); n++) {
+        // change speed of rock
         if (frameCount % spawn === 0) {
             // spawn = spawn - 10 + current_rock_speed;
-            if (score % 20 === 0 && score !== 0) {
-                current_rock_speed += 1;
-            }
-            if (current_rock_speed >= 20) {
-                current_rock_speed = 20;
-            }
+            // if (score % 20 === 0 && score !== 0) {
+            //     current_rock_speed += 1;
+            // }
+            // if (current_rock_speed >= 15) {
+            //     current_rock_speed = 15;
+            // }
             rocks.push(new Rock(current_rock_speed));
         }
         for (let i = rocks.length - 1; i >= 0; i--) {
@@ -60,7 +61,6 @@ function draw() {
                 t_rex.think(rocks);
                 t_rex.update();
             }
-
         }
 
         if (dinosaurs.length === 0) {
@@ -68,13 +68,12 @@ function draw() {
             score = 0;
             nextGeneration();
             rocks = [];
-            current_rock_speed = 10;
+            current_rock_speed = 7;
             num_generations += 1;
         }
     }
 
     background(220);
-
     push();
     textSize(18);
     text('score:' + score, 10, 30);
@@ -86,8 +85,9 @@ function draw() {
     text('generations:' + num_generations, 10, 66);
 
     textSize(18);
-    text('alive rate:' + (dinosaurs.length / TOTAL).toFixed(2), 10, 84);
+    text('total/alive:' + TOTAL + "/" + dinosaurs.length, 10, 84);
     pop();
+
 
     for (let rock of rocks) {
         rock.show();
@@ -97,6 +97,7 @@ function draw() {
     }
 }
 
+// play
 
 // function setup() {
 //     let canvas = createCanvas(600, 500);
@@ -130,10 +131,10 @@ function draw() {
 //
 // }
 
-
-function keyPressed() {
-    if (key == ' ') {
-        t_rex.jump();
-        //console.log("SPACE");
-    }
-}
+//
+// function keyPressed() {
+//     if (key == ' ') {
+//         t_rex.jump();
+//         //console.log("SPACE");
+//     }
+// }

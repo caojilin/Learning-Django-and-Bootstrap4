@@ -10,4 +10,6 @@ urlpatterns = [
     path('flappy_bird', views.flappy_bird, name='flappy_bird'),
     path('angry_bird', views.angry_bird, name='angry_bird'),
     path('smart_rocket', views.smart_rocket, name='smart_rocket'),
+    path('chess', views.chess, name='chess'),
+    path('img/<id>', views.img, name='img'),
 ]

@@ -1,0 +1,1151 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | Chess {% endblock %}
+{% block content %}
+<link rel="stylesheet"
+      href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+      integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
+      crossorigin="anonymous">
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js"></script>
+
+<script>
+    /*! chessboard.js v1.0.0 | (c) 2019 Chris Oakman | MIT License chessboardjs.com/license */
+    !function () {
+        "use strict";
+        var z = window.jQuery, F = "abcdefgh".split(""), r = 20, A = "…", W = "1.8.3",
+            e = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", G = pe(e), n = 200, t = 200, o = 60, a = 30, i = 100,
+            H = {};
+
+        function V(e, r, n) {
+            function t() {
+                o = 0, a && (a = !1, s())
+            }
+
+            var o = 0, a = !1, i = [], s = function () {
+                o = window.setTimeout(t, r), e.apply(n, i)
+            };
+            return function (e) {
+                i = arguments, o ? a = !0 : s()
+            }
+        }
+
+        function Z() {
+            return "xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx".replace(/x/g, function (e) {
+                return (16 * Math.random() | 0).toString(16)
+            })
+        }
+
+        function _(e) {
+            return JSON.parse(JSON.stringify(e))
+        }
+
+        function s(e) {
+            var r = e.split(".");
+            return {major: parseInt(r[0], 10), minor: parseInt(r[1], 10), patch: parseInt(r[2], 10)}
+        }
+
+        function ee(e, r) {
+            for (var n in r) if (r.hasOwnProperty(n)) for (var t = "{" + n + "}", o = r[n]; -1 !== e.indexOf(t);) e = e.replace(t, o);
+            return e
+        }
+
+        function re(e) {
+            return "string" == typeof e
+        }
+
+        function ne(e) {
+            return "function" == typeof e
+        }
+
+        function p(e) {
+            return "number" == typeof e && isFinite(e) && Math.floor(e) === e
+        }
+
+        function c(e) {
+            return "fast" === e || "slow" === e || !!p(e) && 0 <= e
+        }
+
+        function te(e) {
+            if (!re(e)) return !1;
+            var r = e.split("-");
+            return 2 === r.length && (oe(r[0]) && oe(r[1]))
+        }
+
+        function oe(e) {
+            return re(e) && -1 !== e.search(/^[a-h][1-8]$/)
+        }
+
+        function u(e) {
+            return re(e) && -1 !== e.search(/^[bw][KQRNBP]$/)
+        }
+
+        function ae(e) {
+            if (!re(e)) return !1;
+            var r = (e = function (e) {
+                return e.replace(/8/g, "11111111").replace(/7/g, "1111111").replace(/6/g, "111111").replace(/5/g, "11111").replace(/4/g, "1111").replace(/3/g, "111").replace(/2/g, "11")
+            }(e = e.replace(/ .+$/, ""))).split("/");
+            if (8 !== r.length) return !1;
+            for (var n = 0; n < 8; n++) if (8 !== r[n].length || -1 !== r[n].search(/[^kqrnbpKQRNBP1]/)) return !1;
+            return !0
+        }
+
+        function ie(e) {
+            if (!z.isPlainObject(e)) return !1;
+            for (var r in e) if (e.hasOwnProperty(r) && (!oe(r) || !u(e[r]))) return !1;
+            return !0
+        }
+
+        function se() {
+            return typeof window.$ && z.fn && z.fn.jquery && function (e, r) {
+                e = s(e), r = s(r);
+                var n = 1e5 * e.major * 1e5 + 1e5 * e.minor + e.patch;
+                return 1e5 * r.major * 1e5 + 1e5 * r.minor + r.patch <= n
+            }(z.fn.jquery, W)
+        }
+
+        function pe(e) {
+            if (!ae(e)) return !1;
+            for (var r, n = (e = e.replace(/ .+$/, "")).split("/"), t = {}, o = 8, a = 0; a < 8; a++) {
+                for (var i = n[a].split(""), s = 0, p = 0; p < i.length; p++) {
+                    if (-1 !== i[p].search(/[1-8]/)) s += parseInt(i[p], 10); else t[F[s] + o] = (r = i[p]).toLowerCase() === r ? "b" + r.toUpperCase() : "w" + r.toUpperCase(), s += 1
+                }
+                o -= 1
+            }
+            return t
+        }
+
+        function ce(e) {
+            if (!ie(e)) return !1;
+            for (var r, n, t = "", o = 8, a = 0; a < 8; a++) {
+                for (var i = 0; i < 8; i++) {
+                    var s = F[i] + o;
+                    e.hasOwnProperty(s) ? t += (r = e[s], n = void 0, "w" === (n = r.split(""))[0] ? n[1].toUpperCase() : n[1].toLowerCase()) : t += "1"
+                }
+                7 !== a && (t += "/"), o -= 1
+            }
+            return t = function (e) {
+                return e.replace(/11111111/g, "8").replace(/1111111/g, "7").replace(/111111/g, "6").replace(/11111/g, "5").replace(/1111/g, "4").replace(/111/g, "3").replace(/11/g, "2")
+            }(t)
+        }
+
+        function ue(e, r, n) {
+            for (var t = function (e) {
+                for (var r = [], n = 0; n < 8; n++) for (var t = 0; t < 8; t++) {
+                    var o = F[n] + (t + 1);
+                    e !== o && r.push({
+                        square: o,
+                        distance: (a = e, i = o, void 0, void 0, void 0, void 0, void 0, void 0, void 0, void 0, s = a.split(""), p = F.indexOf(s[0]) + 1, c = parseInt(s[1], 10), u = i.split(""), f = F.indexOf(u[0]) + 1, d = parseInt(u[1], 10), h = Math.abs(p - f), l = Math.abs(c - d), l <= h ? h : l)
+                    })
+                }
+                var a, i, s, p, c, u, f, d, h, l;
+                r.sort(function (e, r) {
+                    return e.distance - r.distance
+                });
+                var v = [];
+                for (n = 0; n < r.length; n++) v.push(r[n].square);
+                return v
+            }(n), o = 0; o < t.length; o++) {
+                var a = t[o];
+                if (e.hasOwnProperty(a) && e[a] === r) return a
+            }
+            return !1
+        }
+
+        function fe(e) {
+            return "black" !== e.orientation && (e.orientation = "white"), !1 !== e.showNotation && (e.showNotation = !0), !0 !== e.draggable && (e.draggable = !1), "trash" !== e.dropOffBoard && (e.dropOffBoard = "snapback"), !0 !== e.sparePieces && (e.sparePieces = !1), e.sparePieces && (e.draggable = !0), e.hasOwnProperty("pieceTheme") && (re(e.pieceTheme) || ne(e.pieceTheme)) || (e.pieceTheme = "../static/img/chesspieces/wikipedia/{piece}.png"), c(e.appearSpeed) || (e.appearSpeed = n), c(e.moveSpeed) || (e.moveSpeed = t), c(e.snapbackSpeed) || (e.snapbackSpeed = o), c(e.snapSpeed) || (e.snapSpeed = a), c(e.trashSpeed) || (e.trashSpeed = i), function (e) {
+                return p(e) && 1 <= e
+            }(e.dragThrottleRate) || (e.dragThrottleRate = r), e
+        }
+
+        H.alpha = "alpha-d2270", H.black = "black-3c85d", H.board = "board-b72b1", H.chessboard = "chessboard-63f37", H.clearfix = "clearfix-7da63", H.highlight1 = "highlight1-32417", H.highlight2 = "highlight2-9c5d2", H.notation = "notation-322f9", H.numeric = "numeric-fc462", H.piece = "piece-417db", H.row = "row-5277c", H.sparePieces = "spare-pieces-7492f", H.sparePiecesBottom = "spare-pieces-bottom-ae20f", H.sparePiecesTop = "spare-pieces-top-4028b", H.square = "square-55d63", H.white = "white-1e1d7", window.Chessboard = function (e, f) {
+            if (!function () {
+                if (se()) return !0;
+                var e = "Chessboard Error 1005: Unable to find a valid version of jQuery. Please include jQuery " + W + " or higher on the page\n\nExiting" + A;
+                return window.alert(e), !1
+            }()) return null;
+            var n = function (e) {
+                if ("" === e) {
+                    var r = "Chessboard Error 1001: The first argument to Chessboard() cannot be an empty string.\n\nExiting" + A;
+                    return window.alert(r), !1
+                }
+                re(e) && "#" !== e.charAt(0) && (e = "#" + e);
+                var n = z(e);
+                if (1 === n.length) return n;
+                var t = "Chessboard Error 1003: The first argument to Chessboard() must be the ID of a DOM node, an ID query selector, or a single DOM node.\n\nExiting" + A;
+                return window.alert(t), !1
+            }(e);
+            if (!n) return null;
+            f = fe(f = function (e) {
+                return "start" === e ? e = {position: _(G)} : ae(e) ? e = {position: pe(e)} : ie(e) && (e = {position: _(e)}), z.isPlainObject(e) || (e = {}), e
+            }(f));
+            var r = null, a = null, t = null, o = null, i = {}, s = 2, p = "white", c = {}, u = null, d = null,
+                h = null, l = !1, v = {}, g = {}, w = {}, b = 16;
+
+            function m(e, r, n) {
+                if (!0 === f.hasOwnProperty("showErrors") && !1 !== f.showErrors) {
+                    var t = "Chessboard Error " + e + ": " + r;
+                    return "console" === f.showErrors && "object" == typeof console && "function" == typeof console.log ? (console.log(t), void (2 <= arguments.length && console.log(n))) : "alert" === f.showErrors ? (n && (t += "\n\n" + JSON.stringify(n)), void window.alert(t)) : void (ne(f.showErrors) && f.showErrors(e, r, n))
+                }
+            }
+
+            function P(e) {
+                return ne(f.pieceTheme) ? f.pieceTheme(e) : re(f.pieceTheme) ? ee(f.pieceTheme, {piece: e}) : (m(8272, "Unable to build image source for config.pieceTheme."), "")
+            }
+
+            function y(e, r, n) {
+                var t = '<img src="' + P(e) + '" ';
+                return re(n) && "" !== n && (t += 'id="' + n + '" '), t += 'alt="" class="{piece}" data-piece="' + e + '" style="width:' + b + "px;height:" + b + "px;", r && (t += "display:none;"), ee(t += '" />', H)
+            }
+
+            function x(e) {
+                var r = ["wK", "wQ", "wR", "wB", "wN", "wP"];
+                "black" === e && (r = ["bK", "bQ", "bR", "bB", "bN", "bP"]);
+                for (var n = "", t = 0; t < r.length; t++) n += y(r[t], !1, v[r[t]]);
+                return n
+            }
+
+            function O(e, r, n, t) {
+                var o = z("#" + g[e]), a = o.offset(), i = z("#" + g[r]), s = i.offset(), p = Z();
+                z("body").append(y(n, !0, p));
+                var c = z("#" + p);
+                c.css({display: "", position: "absolute", top: a.top, left: a.left}), o.find("." + H.piece).remove();
+                var u = {
+                    duration: f.moveSpeed, complete: function () {
+                        i.append(y(n)), c.remove(), ne(t) && t()
+                    }
+                };
+                c.animate(s, u)
+            }
+
+            function S(e, r, n) {
+                var t = z("#" + v[e]).offset(), o = z("#" + g[r]), a = o.offset(), i = Z();
+                z("body").append(y(e, !0, i));
+                var s = z("#" + i);
+                s.css({display: "", position: "absolute", left: t.left, top: t.top});
+                var p = {
+                    duration: f.moveSpeed, complete: function () {
+                        o.find("." + H.piece).remove(), o.append(y(e)), s.remove(), ne(n) && n()
+                    }
+                };
+                s.animate(a, p)
+            }
+
+            function T() {
+                for (var e in r.find("." + H.piece).remove(), c) c.hasOwnProperty(e) && z("#" + g[e]).append(y(c[e]))
+            }
+
+            function q() {
+                r.html(function (e) {
+                    "black" !== e && (e = "white");
+                    var r = "", n = _(F), t = 8;
+                    "black" === e && (n.reverse(), t = 1);
+                    for (var o = "white", a = 0; a < 8; a++) {
+                        r += '<div class="{row}">';
+                        for (var i = 0; i < 8; i++) {
+                            var s = n[i] + t;
+                            r += '<div class="{square} ' + H[o] + " square-" + s + '" style="width:' + b + "px;height:" + b + 'px;" id="' + g[s] + '" data-square="' + s + '">', f.showNotation && (("white" === e && 1 === t || "black" === e && 8 === t) && (r += '<div class="{notation} {alpha}">' + n[i] + "</div>"), 0 === i && (r += '<div class="{notation} {numeric}">' + t + "</div>")), r += "</div>", o = "white" === o ? "black" : "white"
+                        }
+                        r += '<div class="{clearfix}"></div></div>', o = "white" === o ? "black" : "white", "white" === e ? t -= 1 : t += 1
+                    }
+                    return ee(r, H)
+                }(p, f.showNotation)), T(), f.sparePieces && ("white" === p ? (t.html(x("black")), o.html(x("white"))) : (t.html(x("white")), o.html(x("black"))))
+            }
+
+            function k(e) {
+                var r = _(c), n = _(e);
+                ce(r) !== ce(n) && (ne(f.onChange) && f.onChange(r, n), c = e)
+            }
+
+            function E(e, r) {
+                for (var n in w) if (w.hasOwnProperty(n)) {
+                    var t = w[n];
+                    if (e >= t.left && e < t.left + b && r >= t.top && r < t.top + b) return n
+                }
+                return "offboard"
+            }
+
+            function C() {
+                r.find("." + H.square).removeClass(H.highlight1 + " " + H.highlight2)
+            }
+
+            function B() {
+                C();
+                var e = _(c);
+                delete e[h], k(e), T(), a.fadeOut(f.trashSpeed), l = !1
+            }
+
+            function I(e, r, n, t) {
+                ne(f.onDragStart) && !1 === f.onDragStart(e, r, _(c), p) || (l = !0, u = r, d = "spare" === (h = e) ? "offboard" : e, function () {
+                    for (var e in w = {}, g) g.hasOwnProperty(e) && (w[e] = z("#" + g[e]).offset())
+                }(), a.attr("src", P(r)).css({
+                    display: "",
+                    position: "absolute",
+                    left: n - b / 2,
+                    top: t - b / 2
+                }), "spare" !== e && z("#" + g[e]).addClass(H.highlight1).find("." + H.piece).css("display", "none"))
+            }
+
+            function M(e, r) {
+                a.css({left: e - b / 2, top: r - b / 2});
+                var n = E(e, r);
+                n !== d && (oe(d) && z("#" + g[d]).removeClass(H.highlight2), oe(n) && z("#" + g[n]).addClass(H.highlight2), ne(f.onDragMove) && f.onDragMove(n, d, h, u, _(c), p), d = n)
+            }
+
+            function N(e) {
+                var r = "drop";
+                if ("offboard" === e && "snapback" === f.dropOffBoard && (r = "snapback"), "offboard" === e && "trash" === f.dropOffBoard && (r = "trash"), ne(f.onDrop)) {
+                    var n = _(c);
+                    "spare" === h && oe(e) && (n[e] = u), oe(h) && "offboard" === e && delete n[h], oe(h) && oe(e) && (delete n[h], n[e] = u);
+                    var t = _(c), o = f.onDrop(h, e, u, n, t, p);
+                    "snapback" !== o && "trash" !== o || (r = o)
+                }
+                "snapback" === r ? function () {
+                    if ("spare" !== h) {
+                        C();
+                        var e = z("#" + g[h]).offset(), r = {
+                            duration: f.snapbackSpeed, complete: function () {
+                                T(), a.css("display", "none"), ne(f.onSnapbackEnd) && f.onSnapbackEnd(u, h, _(c), p)
+                            }
+                        };
+                        a.animate(e, r), l = !1
+                    } else B()
+                }() : "trash" === r ? B() : "drop" === r && function (e) {
+                    C();
+                    var r = _(c);
+                    delete r[h], r[e] = u, k(r);
+                    var n = z("#" + g[e]).offset(), t = {
+                        duration: f.snapSpeed, complete: function () {
+                            T(), a.css("display", "none"), ne(f.onSnapEnd) && f.onSnapEnd(h, e, u)
+                        }
+                    };
+                    a.animate(n, t), l = !1
+                }(e)
+            }
+
+            function j(e) {
+                e.preventDefault()
+            }
+
+            function D(e) {
+                if (f.draggable) {
+                    var r = z(this).attr("data-square");
+                    oe(r) && c.hasOwnProperty(r) && I(r, c[r], e.pageX, e.pageY)
+                }
+            }
+
+            function R(e) {
+                if (f.draggable) {
+                    var r = z(this).attr("data-square");
+                    oe(r) && c.hasOwnProperty(r) && (e = e.originalEvent, I(r, c[r], e.changedTouches[0].pageX, e.changedTouches[0].pageY))
+                }
+            }
+
+            function Q(e) {
+                f.sparePieces && I("spare", z(this).attr("data-piece"), e.pageX, e.pageY)
+            }
+
+            function X(e) {
+                f.sparePieces && I("spare", z(this).attr("data-piece"), (e = e.originalEvent).changedTouches[0].pageX, e.changedTouches[0].pageY)
+            }
+
+            i.clear = function (e) {
+                i.position({}, e)
+            }, i.destroy = function () {
+                n.html(""), a.remove(), n.unbind()
+            }, i.fen = function () {
+                return i.position("fen")
+            }, i.flip = function () {
+                return i.orientation("flip")
+            }, i.move = function () {
+                if (0 !== arguments.length) {
+                    for (var e = !0, r = {}, n = 0; n < arguments.length; n++) if (!1 !== arguments[n]) if (te(arguments[n])) {
+                        var t = arguments[n].split("-");
+                        r[t[0]] = t[1]
+                    } else m(2826, "Invalid move passed to the move method.", arguments[n]); else e = !1;
+                    var o = function (e, r) {
+                        var n = _(e);
+                        for (var t in r) if (r.hasOwnProperty(t) && n.hasOwnProperty(t)) {
+                            var o = n[t];
+                            delete n[t], n[r[t]] = o
+                        }
+                        return n
+                    }(c, r);
+                    return i.position(o, e), o
+                }
+            }, i.orientation = function (e) {
+                return 0 === arguments.length ? p : "white" === e || "black" === e ? (p = e, q(), p) : "flip" === e ? (p = "white" === p ? "black" : "white", q(), p) : void m(5482, "Invalid value passed to the orientation method.", e)
+            }, i.position = function (e, r) {
+                if (0 === arguments.length) return _(c);
+                if (re(e) && "fen" === e.toLowerCase()) return ce(c);
+                (re(e) && "start" === e.toLowerCase() && (e = _(G)), ae(e) && (e = pe(e)), ie(e)) ? (!1 !== r && (r = !0), r ? (function (e, r, n) {
+                    if (0 !== e.length) for (var t = 0, o = 0; o < e.length; o++) {
+                        var a = e[o];
+                        "clear" === a.type ? z("#" + g[a.square] + " ." + H.piece).fadeOut(f.trashSpeed, i) : "add" !== a.type || f.sparePieces ? "add" === a.type && f.sparePieces ? S(a.piece, a.square, i) : "move" === a.type && O(a.source, a.destination, a.piece, i) : z("#" + g[a.square]).append(y(a.piece, !0)).find("." + H.piece).fadeIn(f.appearSpeed, i)
+                    }
+
+                    function i() {
+                        (t += 1) === e.length && (T(), ne(f.onMoveEnd) && f.onMoveEnd(_(r), _(n)))
+                    }
+                }(function (e, r) {
+                    e = _(e), r = _(r);
+                    var n = [], t = {};
+                    for (var o in r) r.hasOwnProperty(o) && e.hasOwnProperty(o) && e[o] === r[o] && (delete e[o], delete r[o]);
+                    for (o in r) if (r.hasOwnProperty(o)) {
+                        var a = ue(e, r[o], o);
+                        a && (n.push({
+                            type: "move",
+                            source: a,
+                            destination: o,
+                            piece: r[o]
+                        }), delete e[a], delete r[o], t[o] = !0)
+                    }
+                    for (o in r) r.hasOwnProperty(o) && (n.push({type: "add", square: o, piece: r[o]}), delete r[o]);
+                    for (o in e) e.hasOwnProperty(o) && (t.hasOwnProperty(o) || (n.push({
+                        type: "clear",
+                        square: o,
+                        piece: e[o]
+                    }), delete e[o]));
+                    return n
+                }(c, e), c, e), k(e)) : (k(e), T())) : m(6482, "Invalid value passed to the position method.", e)
+            }, i.resize = function () {
+                b = function () {
+                    var e = parseInt(n.width(), 10);
+                    if (!e || e <= 0) return 0;
+                    for (var r = e - 1; r % 8 != 0 && 0 < r;) r -= 1;
+                    return r / 8
+                }(), r.css("width", 8 * b + "px"), a.css({
+                    height: b,
+                    width: b
+                }), f.sparePieces && n.find("." + H.sparePieces).css("paddingLeft", b + s + "px"), q()
+            }, i.start = function (e) {
+                i.position("start", e)
+            };
+            var Y = V(function (e) {
+                l && M(e.pageX, e.pageY)
+            }, f.dragThrottleRate), K = V(function (e) {
+                l && (e.preventDefault(), M(e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY))
+            }, f.dragThrottleRate);
+
+            function L(e) {
+                l && N(E(e.pageX, e.pageY))
+            }
+
+            function U(e) {
+                l && N(E(e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY))
+            }
+
+            function $(e) {
+                if (!l && ne(f.onMouseoverSquare)) {
+                    var r = z(e.currentTarget).attr("data-square");
+                    if (oe(r)) {
+                        var n = !1;
+                        c.hasOwnProperty(r) && (n = c[r]), f.onMouseoverSquare(r, n, _(c), p)
+                    }
+                }
+            }
+
+            function J(e) {
+                if (!l && ne(f.onMouseoutSquare)) {
+                    var r = z(e.currentTarget).attr("data-square");
+                    if (oe(r)) {
+                        var n = !1;
+                        c.hasOwnProperty(r) && (n = c[r]), f.onMouseoutSquare(r, n, _(c), p)
+                    }
+                }
+            }
+
+            return p = f.orientation, f.hasOwnProperty("position") && ("start" === f.position ? c = _(G) : ae(f.position) ? c = pe(f.position) : ie(f.position) ? c = _(f.position) : m(7263, "Invalid value passed to config.position.", f.position)), function () {
+                !function () {
+                    for (var e = 0; e < F.length; e++) for (var r = 1; r <= 8; r++) {
+                        var n = F[e] + r;
+                        g[n] = n + "-" + Z()
+                    }
+                    var t = "KQRNBP".split("");
+                    for (e = 0; e < t.length; e++) {
+                        var o = "w" + t[e], a = "b" + t[e];
+                        v[o] = o + "-" + Z(), v[a] = a + "-" + Z()
+                    }
+                }(), n.html(function (e) {
+                    var r = '<div class="{chessboard}">';
+                    return e && (r += '<div class="{sparePieces} {sparePiecesTop}"></div>'), r += '<div class="{board}"></div>', e && (r += '<div class="{sparePieces} {sparePiecesBottom}"></div>'), ee(r += "</div>", H)
+                }(f.sparePieces)), r = n.find("." + H.board), f.sparePieces && (t = n.find("." + H.sparePiecesTop), o = n.find("." + H.sparePiecesBottom));
+                var e = Z();
+                z("body").append(y("wP", !0, e)), a = z("#" + e), s = parseInt(r.css("borderLeftWidth"), 10), i.resize()
+            }(), function () {
+                z("body").on("mousedown mousemove", "." + H.piece, j), r.on("mousedown", "." + H.square, D), n.on("mousedown", "." + H.sparePieces + " ." + H.piece, Q), r.on("mouseenter", "." + H.square, $).on("mouseleave", "." + H.square, J);
+                var e = z(window);
+                e.on("mousemove", Y).on("mouseup", L), "ontouchstart" in document.documentElement && (r.on("touchstart", "." + H.square, R), n.on("touchstart", "." + H.sparePieces + " ." + H.piece, X), e.on("touchmove", K).on("touchend", U))
+            }(), i
+        }, window.ChessBoard = window.Chessboard, window.Chessboard.fenToObj = pe, window.Chessboard.objToFen = ce
+    }();
+</script>
+
+<button id="startBtn">Start Position</button>
+<button id="clearBtn">Clear Board</button>
+
+
+<div id="myBoard" style="width: 400px;"></div>
+
+<script>
+    const config = {
+        draggable: true,
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onSnapEnd: onSnapEnd
+    }
+
+    const game = new Chess();
+    const board = Chessboard('myBoard', config);
+    // $('#startBtn').on('click', board.start)
+    // $('#clearBtn').on('click', board.clear)
+    const pawnEvalWhite =
+        [
+            [ 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+            [ 5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0],
+            [ 1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0],
+            [ 0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5],
+            [ 0.0,  0.0,  0.0,  2.0,  2.0,  0.0,  0.0,  0.0],
+            [ 0.5, -0.5, -1.0,  0.0,  0.0, -1.0, -0.5,  0.5],
+            [ 0.5,  1.0,  1.0, -2.0, -2.0,  1.0,  1.0,  0.5],
+            [ 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0]
+        ];
+
+    const pawnEvalBlack = reverseArray(pawnEvalWhite);
+
+    const knightEval =
+        [
+            [-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0],
+            [-4.0, -2.0,  0.0,  0.0,  0.0,  0.0, -2.0, -4.0],
+            [-3.0,  0.0,  1.0,  1.5,  1.5,  1.0,  0.0, -3.0],
+            [-3.0,  0.5,  1.5,  2.0,  2.0,  1.5,  0.5, -3.0],
+            [-3.0,  0.0,  1.5,  2.0,  2.0,  1.5,  0.0, -3.0],
+            [-3.0,  0.5,  1.0,  1.5,  1.5,  1.0,  0.5, -3.0],
+            [-4.0, -2.0,  0.0,  0.5,  0.5,  0.0, -2.0, -4.0],
+            [-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0]
+        ];
+
+    const bishopEvalWhite =
+        [
+            [-2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0],
+            [-1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0],
+            [-1.0,  0.0,  0.5,  1.0,  1.0,  0.5,  0.0, -1.0],
+            [-1.0,  0.5,  0.5,  1.0,  1.0,  0.5,  0.5, -1.0],
+            [-1.0,  0.0,  1.0,  1.0,  1.0,  1.0,  0.0, -1.0],
+            [-1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0, -1.0],
+            [-1.0,  0.5,  0.0,  0.0,  0.0,  0.0,  0.5, -1.0],
+            [-2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0]
+        ];
+
+    const bishopEvalBlack = reverseArray(bishopEvalWhite);
+
+    const rookEvalWhite =
+        [
+            [ 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+            [ 0.5,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  0.5],
+            [-0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5],
+            [-0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5],
+            [-0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5],
+            [-0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5],
+            [-0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5],
+            [ 0.0,  0.0,  0.0,  0.5,  0.5,  0.0,  0.0,  0.0]
+        ];
+
+    const rookEvalBlack = reverseArray(rookEvalWhite);
+
+    const queenEval =
+        [
+            [-2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0],
+            [-1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0],
+            [-1.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0],
+            [-0.5,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5],
+            [ 0.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5],
+            [-1.0,  0.5,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0],
+            [-1.0,  0.0,  0.5,  0.0,  0.0,  0.0,  0.0, -1.0],
+            [-2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0]
+        ];
+
+    const kingEvalWhite =
+        [
+            [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0],
+            [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0],
+            [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0],
+            [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0],
+            [-2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0],
+            [-1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0],
+            [ 2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0],
+            [ 2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0]
+        ];
+
+    const kingEvalBlack = reverseArray(kingEvalWhite);
+
+    function reverseArray(array) {
+        return array.slice().reverse();
+    }
+
+    function onDragStart(source, piece, position, orientation) {
+        if (game.game_over()) return false;
+
+        if (piece.search(/^b/) !== -1) {
+            return false;
+        }
+    }
+
+    function onDrop(source, target) {
+        const move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q'
+        });
+
+        if (move === null) return 'snapback';
+
+        setTimeout(makeBestMove, 250);
+    }
+
+    function makeBestMove() {
+        if (game.game_over()) {
+            alert('Game over');
+        }
+        const bestMove = minimaxRoot(game, 2, true);
+        game.move(bestMove);
+        board.position(game.fen());
+        if (game.game_over()) {
+            alert('Game over');
+        }
+    }
+
+    function onSnapEnd() {
+        board.position(game.fen());
+    }
+
+    function minimax(game, depth, alpha, beta, maximizingPlayer) {
+        if (depth === 0) {
+            return -evaluateBoard(game.board());
+        }
+
+        const moves = game.moves();
+
+        if (maximizingPlayer) {
+            let bestMove = -Infinity;
+            for (const move of moves) {
+                game.move(move);
+                const value = minimax(game, depth-1, alpha, beta, false);
+                bestMove = Math.max(bestMove, value);
+                alpha = Math.max(alpha, value);
+                if (alpha >= beta) {
+                    game.undo();
+                    break;
+                }
+                game.undo();
+            }
+            return bestMove;
+        } else {
+            let bestMove = +Infinity;
+            for (const move of moves) {
+                game.move(move);
+                const value = minimax(game, depth-1, alpha, beta, true);
+                bestMove = Math.min(bestMove, value);
+                beta = Math.min(beta, value);
+                if (alpha >= beta) {
+                    game.undo();
+                    break;
+                }
+                game.undo();
+            }
+            return bestMove;
+        }
+    }
+
+    function minimaxRoot(game, depth, maximizingPlayer) {
+        const moves = game.moves();
+        let bestMove = -Infinity;
+        let bestMoveFound = null;
+
+        for (const move of moves) {
+            game.move(move);
+            const value = minimax(game, depth-1, -Infinity, Infinity, !maximizingPlayer);
+            game.undo();
+            if (value >= bestMove) {
+                bestMove = value;
+                bestMoveFound = move;
+            }
+        }
+
+        return bestMoveFound;
+    }
+
+    function evaluateBoard(board) {
+        let totalEvaluation = 0;
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                totalEvaluation += getPieceValue(board[i][j], i, j);
+            }
+        }
+        return totalEvaluation;
+    }
+
+    function getPieceValue(piece, x, y) {
+        if (piece === null) {
+            return 0;
+        }
+        let absoluteValue;
+        if (piece.type === 'p') {
+            absoluteValue = 10 + (piece.color ? pawnEvalWhite[x][y] : pawnEvalBlack[x][y]);
+        } else if (piece.type === 'n') {
+            absoluteValue = 30 + knightEval[x][y];
+        } else if (piece.type === 'b') {
+            absoluteValue = 30 + (piece.color ? bishopEvalWhite[x][y] : bishopEvalBlack[x][y]);
+        } else if (piece.type === 'r') {
+            absoluteValue = 50 + (piece.color ? rookEvalWhite[x][y] : rookEvalBlack[x][y]);
+        } else if (piece.type === 'q') {
+            absoluteValue = 90 + queenEval[x][y];
+        } else if (piece.type === 'k') {
+            absoluteValue = 900 + (piece.color ? kingEvalWhite[x][y] : kingEvalBlack[x][y]);
+        } else {
+            throw Error(`Unknown piece type: ${piece.type}`);
+        }
+
+        return piece.color === 'w' ? absoluteValue : -absoluteValue;
+    }
+</script>
+<script>
+    var q = null;
+    window.PR_SHOULD_USE_CONTINUATION = !0;
+    (function () {
+        function L(a) {
+            function m(a) {
+                var f = a.charCodeAt(0);
+                if (f !== 92) return f;
+                var b = a.charAt(1);
+                return (f = r[b]) ? f : "0" <= b && b <= "7" ? parseInt(a.substring(1), 8) : b === "u" || b === "x" ? parseInt(a.substring(2), 16) : a.charCodeAt(1)
+            }
+
+            function e(a) {
+                if (a < 32) return (a < 16 ? "\\x0" : "\\x") + a.toString(16);
+                a = String.fromCharCode(a);
+                if (a === "\\" || a === "-" || a === "[" || a === "]") a = "\\" + a;
+                return a
+            }
+
+            function h(a) {
+                for (var f = a.substring(1, a.length - 1).match(/\\u[\dA-Fa-f]{4}|\\x[\dA-Fa-f]{2}|\\[0-3][0-7]{0,2}|\\[0-7]{1,2}|\\[\S\s]|[^\\]/g), a =
+                    [], b = [], o = f[0] === "^", c = o ? 1 : 0, i = f.length; c < i; ++c) {
+                    var j = f[c];
+                    if (/\\[bdsw]/i.test(j)) a.push(j); else {
+                        var j = m(j), d;
+                        c + 2 < i && "-" === f[c + 1] ? (d = m(f[c + 2]), c += 2) : d = j;
+                        b.push([j, d]);
+                        d < 65 || j > 122 || (d < 65 || j > 90 || b.push([Math.max(65, j) | 32, Math.min(d, 90) | 32]), d < 97 || j > 122 || b.push([Math.max(97, j) & -33, Math.min(d, 122) & -33]))
+                    }
+                }
+                b.sort(function (a, f) {
+                    return a[0] - f[0] || f[1] - a[1]
+                });
+                f = [];
+                j = [NaN, NaN];
+                for (c = 0; c < b.length; ++c) i = b[c], i[0] <= j[1] + 1 ? j[1] = Math.max(j[1], i[1]) : f.push(j = i);
+                b = ["["];
+                o && b.push("^");
+                b.push.apply(b, a);
+                for (c = 0; c <
+                f.length; ++c) i = f[c], b.push(e(i[0])), i[1] > i[0] && (i[1] + 1 > i[0] && b.push("-"), b.push(e(i[1])));
+                b.push("]");
+                return b.join("")
+            }
+
+            function y(a) {
+                for (var f = a.source.match(/\[(?:[^\\\]]|\\[\S\s])*]|\\u[\dA-Fa-f]{4}|\\x[\dA-Fa-f]{2}|\\\d+|\\[^\dux]|\(\?[!:=]|[()^]|[^()[\\^]+/g), b = f.length, d = [], c = 0, i = 0; c < b; ++c) {
+                    var j = f[c];
+                    j === "(" ? ++i : "\\" === j.charAt(0) && (j = +j.substring(1)) && j <= i && (d[j] = -1)
+                }
+                for (c = 1; c < d.length; ++c) -1 === d[c] && (d[c] = ++t);
+                for (i = c = 0; c < b; ++c) j = f[c], j === "(" ? (++i, d[i] === void 0 && (f[c] = "(?:")) : "\\" === j.charAt(0) &&
+                    (j = +j.substring(1)) && j <= i && (f[c] = "\\" + d[i]);
+                for (i = c = 0; c < b; ++c) "^" === f[c] && "^" !== f[c + 1] && (f[c] = "");
+                if (a.ignoreCase && s) for (c = 0; c < b; ++c) j = f[c], a = j.charAt(0), j.length >= 2 && a === "[" ? f[c] = h(j) : a !== "\\" && (f[c] = j.replace(/[A-Za-z]/g, function (a) {
+                    a = a.charCodeAt(0);
+                    return "[" + String.fromCharCode(a & -33, a | 32) + "]"
+                }));
+                return f.join("")
+            }
+
+            for (var t = 0, s = !1, l = !1, p = 0, d = a.length; p < d; ++p) {
+                var g = a[p];
+                if (g.ignoreCase) l = !0; else if (/[a-z]/i.test(g.source.replace(/\\u[\da-f]{4}|\\x[\da-f]{2}|\\[^UXux]/gi, ""))) {
+                    s = !0;
+                    l = !1;
+                    break
+                }
+            }
+            for (var r =
+                {b: 8, t: 9, n: 10, v: 11, f: 12, r: 13}, n = [], p = 0, d = a.length; p < d; ++p) {
+                g = a[p];
+                if (g.global || g.multiline) throw Error("" + g);
+                n.push("(?:" + y(g) + ")")
+            }
+            return RegExp(n.join("|"), l ? "gi" : "g")
+        }
+
+        function M(a) {
+            function m(a) {
+                switch (a.nodeType) {
+                    case 1:
+                        if (e.test(a.className)) break;
+                        for (var g = a.firstChild; g; g = g.nextSibling) m(g);
+                        g = a.nodeName;
+                        if ("BR" === g || "LI" === g) h[s] = "\n", t[s << 1] = y++, t[s++ << 1 | 1] = a;
+                        break;
+                    case 3:
+                    case 4:
+                        g = a.nodeValue, g.length && (g = p ? g.replace(/\r\n?/g, "\n") : g.replace(/[\t\n\r ]+/g, " "), h[s] = g, t[s << 1] = y, y += g.length,
+                            t[s++ << 1 | 1] = a)
+                }
+            }
+
+            var e = /(?:^|\s)nocode(?:\s|$)/, h = [], y = 0, t = [], s = 0, l;
+            a.currentStyle ? l = a.currentStyle.whiteSpace : window.getComputedStyle && (l = document.defaultView.getComputedStyle(a, q).getPropertyValue("white-space"));
+            var p = l && "pre" === l.substring(0, 3);
+            m(a);
+            return {a: h.join("").replace(/\n$/, ""), c: t}
+        }
+
+        function B(a, m, e, h) {
+            m && (a = {a: m, d: a}, e(a), h.push.apply(h, a.e))
+        }
+
+        function x(a, m) {
+            function e(a) {
+                for (var l = a.d, p = [l, "pln"], d = 0, g = a.a.match(y) || [], r = {}, n = 0, z = g.length; n < z; ++n) {
+                    var f = g[n], b = r[f], o = void 0, c;
+                    if (typeof b ===
+                        "string") c = !1; else {
+                        var i = h[f.charAt(0)];
+                        if (i) o = f.match(i[1]), b = i[0]; else {
+                            for (c = 0; c < t; ++c) if (i = m[c], o = f.match(i[1])) {
+                                b = i[0];
+                                break
+                            }
+                            o || (b = "pln")
+                        }
+                        if ((c = b.length >= 5 && "lang-" === b.substring(0, 5)) && !(o && typeof o[1] === "string")) c = !1, b = "src";
+                        c || (r[f] = b)
+                    }
+                    i = d;
+                    d += f.length;
+                    if (c) {
+                        c = o[1];
+                        var j = f.indexOf(c), k = j + c.length;
+                        o[2] && (k = f.length - o[2].length, j = k - c.length);
+                        b = b.substring(5);
+                        B(l + i, f.substring(0, j), e, p);
+                        B(l + i + j, c, C(b, c), p);
+                        B(l + i + k, f.substring(k), e, p)
+                    } else p.push(l + i, b)
+                }
+                a.e = p
+            }
+
+            var h = {}, y;
+            (function () {
+                for (var e = a.concat(m),
+                         l = [], p = {}, d = 0, g = e.length; d < g; ++d) {
+                    var r = e[d], n = r[3];
+                    if (n) for (var k = n.length; --k >= 0;) h[n.charAt(k)] = r;
+                    r = r[1];
+                    n = "" + r;
+                    p.hasOwnProperty(n) || (l.push(r), p[n] = q)
+                }
+                l.push(/[\S\s]/);
+                y = L(l)
+            })();
+            var t = m.length;
+            return e
+        }
+
+        function u(a) {
+            var m = [], e = [];
+            a.tripleQuotedStrings ? m.push(["str", /^(?:'''(?:[^'\\]|\\[\S\s]|''?(?=[^']))*(?:'''|$)|"""(?:[^"\\]|\\[\S\s]|""?(?=[^"]))*(?:"""|$)|'(?:[^'\\]|\\[\S\s])*(?:'|$)|"(?:[^"\\]|\\[\S\s])*(?:"|$))/, q, "'\""]) : a.multiLineStrings ? m.push(["str", /^(?:'(?:[^'\\]|\\[\S\s])*(?:'|$)|"(?:[^"\\]|\\[\S\s])*(?:"|$)|`(?:[^\\`]|\\[\S\s])*(?:`|$))/,
+                q, "'\"`"]) : m.push(["str", /^(?:'(?:[^\n\r'\\]|\\.)*(?:'|$)|"(?:[^\n\r"\\]|\\.)*(?:"|$))/, q, "\"'"]);
+            a.verbatimStrings && e.push(["str", /^@"(?:[^"]|"")*(?:"|$)/, q]);
+            var h = a.hashComments;
+            h && (a.cStyleComments ? (h > 1 ? m.push(["com", /^#(?:##(?:[^#]|#(?!##))*(?:###|$)|.*)/, q, "#"]) : m.push(["com", /^#(?:(?:define|elif|else|endif|error|ifdef|include|ifndef|line|pragma|undef|warning)\b|[^\n\r]*)/, q, "#"]), e.push(["str", /^<(?:(?:(?:\.\.\/)*|\/?)(?:[\w-]+(?:\/[\w-]+)+)?[\w-]+\.h|[a-z]\w*)>/, q])) : m.push(["com", /^#[^\n\r]*/,
+                q, "#"]));
+            a.cStyleComments && (e.push(["com", /^\/\/[^\n\r]*/, q]), e.push(["com", /^\/\*[\S\s]*?(?:\*\/|$)/, q]));
+            a.regexLiterals && e.push(["lang-regex", /^(?:^^\.?|[!+-]|!=|!==|#|%|%=|&|&&|&&=|&=|\(|\*|\*=|\+=|,|-=|->|\/|\/=|:|::|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|[?@[^]|\^=|\^\^|\^\^=|{|\||\|=|\|\||\|\|=|~|break|case|continue|delete|do|else|finally|instanceof|return|throw|try|typeof)\s*(\/(?=[^*/])(?:[^/[\\]|\\[\S\s]|\[(?:[^\\\]]|\\[\S\s])*(?:]|$))+\/)/]);
+            (h = a.types) && e.push(["typ", h]);
+            a = ("" + a.keywords).replace(/^ | $/g,
+                "");
+            a.length && e.push(["kwd", RegExp("^(?:" + a.replace(/[\s,]+/g, "|") + ")\\b"), q]);
+            m.push(["pln", /^\s+/, q, " \r\n\t\xa0"]);
+            e.push(["lit", /^@[$_a-z][\w$@]*/i, q], ["typ", /^(?:[@_]?[A-Z]+[a-z][\w$@]*|\w+_t\b)/, q], ["pln", /^[$_a-z][\w$@]*/i, q], ["lit", /^(?:0x[\da-f]+|(?:\d(?:_\d+)*\d*(?:\.\d*)?|\.\d\+)(?:e[+-]?\d+)?)[a-z]*/i, q, "0123456789"], ["pln", /^\\[\S\s]?/, q], ["pun", /^.[^\s\w"-$'./@\\`]*/, q]);
+            return x(m, e)
+        }
+
+        function D(a, m) {
+            function e(a) {
+                switch (a.nodeType) {
+                    case 1:
+                        if (k.test(a.className)) break;
+                        if ("BR" === a.nodeName) h(a),
+                        a.parentNode && a.parentNode.removeChild(a); else for (a = a.firstChild; a; a = a.nextSibling) e(a);
+                        break;
+                    case 3:
+                    case 4:
+                        if (p) {
+                            var b = a.nodeValue, d = b.match(t);
+                            if (d) {
+                                var c = b.substring(0, d.index);
+                                a.nodeValue = c;
+                                (b = b.substring(d.index + d[0].length)) && a.parentNode.insertBefore(s.createTextNode(b), a.nextSibling);
+                                h(a);
+                                c || a.parentNode.removeChild(a)
+                            }
+                        }
+                }
+            }
+
+            function h(a) {
+                function b(a, d) {
+                    var e = d ? a.cloneNode(!1) : a, f = a.parentNode;
+                    if (f) {
+                        var f = b(f, 1), g = a.nextSibling;
+                        f.appendChild(e);
+                        for (var h = g; h; h = g) g = h.nextSibling, f.appendChild(h)
+                    }
+                    return e
+                }
+
+                for (; !a.nextSibling;) if (a = a.parentNode, !a) return;
+                for (var a = b(a.nextSibling, 0), e; (e = a.parentNode) && e.nodeType === 1;) a = e;
+                d.push(a)
+            }
+
+            var k = /(?:^|\s)nocode(?:\s|$)/, t = /\r\n?|\n/, s = a.ownerDocument, l;
+            a.currentStyle ? l = a.currentStyle.whiteSpace : window.getComputedStyle && (l = s.defaultView.getComputedStyle(a, q).getPropertyValue("white-space"));
+            var p = l && "pre" === l.substring(0, 3);
+            for (l = s.createElement("LI"); a.firstChild;) l.appendChild(a.firstChild);
+            for (var d = [l], g = 0; g < d.length; ++g) e(d[g]);
+            m === (m | 0) && d[0].setAttribute("value",
+                m);
+            var r = s.createElement("OL");
+            r.className = "linenums";
+            for (var n = Math.max(0, m - 1 | 0) || 0, g = 0, z = d.length; g < z; ++g) l = d[g], l.className = "L" + (g + n) % 10, l.firstChild || l.appendChild(s.createTextNode("\xa0")), r.appendChild(l);
+            a.appendChild(r)
+        }
+
+        function k(a, m) {
+            for (var e = m.length; --e >= 0;) {
+                var h = m[e];
+                A.hasOwnProperty(h) ? window.console && console.warn("cannot override language handler %s", h) : A[h] = a
+            }
+        }
+
+        function C(a, m) {
+            if (!a || !A.hasOwnProperty(a)) a = /^\s*</.test(m) ? "default-markup" : "default-code";
+            return A[a]
+        }
+
+        function E(a) {
+            var m =
+                a.g;
+            try {
+                var e = M(a.h), h = e.a;
+                a.a = h;
+                a.c = e.c;
+                a.d = 0;
+                C(m, h)(a);
+                var k = /\bMSIE\b/.test(navigator.userAgent), m = /\n/g, t = a.a, s = t.length, e = 0, l = a.c,
+                    p = l.length, h = 0, d = a.e, g = d.length, a = 0;
+                d[g] = s;
+                var r, n;
+                for (n = r = 0; n < g;) d[n] !== d[n + 2] ? (d[r++] = d[n++], d[r++] = d[n++]) : n += 2;
+                g = r;
+                for (n = r = 0; n < g;) {
+                    for (var z = d[n], f = d[n + 1], b = n + 2; b + 2 <= g && d[b + 1] === f;) b += 2;
+                    d[r++] = z;
+                    d[r++] = f;
+                    n = b
+                }
+                for (d.length = r; h < p;) {
+                    var o = l[h + 2] || s, c = d[a + 2] || s, b = Math.min(o, c), i = l[h + 1], j;
+                    if (i.nodeType !== 1 && (j = t.substring(e, b))) {
+                        k && (j = j.replace(m, "\r"));
+                        i.nodeValue =
+                            j;
+                        var u = i.ownerDocument, v = u.createElement("SPAN");
+                        v.className = d[a + 1];
+                        var x = i.parentNode;
+                        x.replaceChild(v, i);
+                        v.appendChild(i);
+                        e < o && (l[h + 1] = i = u.createTextNode(t.substring(b, o)), x.insertBefore(i, v.nextSibling))
+                    }
+                    e = b;
+                    e >= o && (h += 2);
+                    e >= c && (a += 2)
+                }
+            } catch (w) {
+                "console" in window && console.log(w && w.stack ? w.stack : w)
+            }
+        }
+
+        var v = ["break,continue,do,else,for,if,return,while"],
+            w = [[v, "auto,case,char,const,default,double,enum,extern,float,goto,int,long,register,short,signed,sizeof,static,struct,switch,typedef,union,unsigned,void,volatile"],
+                "catch,class,delete,false,import,new,operator,private,protected,public,this,throw,true,try,typeof"],
+            F = [w, "alignof,align_union,asm,axiom,bool,concept,concept_map,const_cast,constexpr,decltype,dynamic_cast,explicit,export,friend,inline,late_check,mutable,namespace,nullptr,reinterpret_cast,static_assert,static_cast,template,typeid,typename,using,virtual,where"],
+            G = [w, "abstract,boolean,byte,extends,final,finally,implements,import,instanceof,null,native,package,strictfp,super,synchronized,throws,transient"],
+            H = [G, "as,base,by,checked,decimal,delegate,descending,dynamic,event,fixed,foreach,from,group,implicit,in,interface,internal,into,is,lock,object,out,override,orderby,params,partial,readonly,ref,sbyte,sealed,stackalloc,string,select,uint,ulong,unchecked,unsafe,ushort,var"],
+            w = [w, "debugger,eval,export,function,get,null,set,undefined,var,with,Infinity,NaN"],
+            I = [v, "and,as,assert,class,def,del,elif,except,exec,finally,from,global,import,in,is,lambda,nonlocal,not,or,pass,print,raise,try,with,yield,False,True,None"],
+            J = [v, "alias,and,begin,case,class,def,defined,elsif,end,ensure,false,in,module,next,nil,not,or,redo,rescue,retry,self,super,then,true,undef,unless,until,when,yield,BEGIN,END"],
+            v = [v, "case,done,elif,esac,eval,fi,function,in,local,set,then,until"],
+            K = /^(DIR|FILE|vector|(de|priority_)?queue|list|stack|(const_)?iterator|(multi)?(set|map)|bitset|u?(int|float)\d*)/,
+            N = /\S/, O = u({
+                keywords: [F, H, w, "caller,delete,die,do,dump,elsif,eval,exit,foreach,for,goto,if,import,last,local,my,next,no,our,print,package,redo,require,sub,undef,unless,until,use,wantarray,while,BEGIN,END" +
+                I, J, v], hashComments: !0, cStyleComments: !0, multiLineStrings: !0, regexLiterals: !0
+            }), A = {};
+        k(O, ["default-code"]);
+        k(x([], [["pln", /^[^<?]+/], ["dec", /^<!\w[^>]*(?:>|$)/], ["com", /^<\!--[\S\s]*?(?:--\>|$)/], ["lang-", /^<\?([\S\s]+?)(?:\?>|$)/], ["lang-", /^<%([\S\s]+?)(?:%>|$)/], ["pun", /^(?:<[%?]|[%?]>)/], ["lang-", /^<xmp\b[^>]*>([\S\s]+?)<\/xmp\b[^>]*>/i], ["lang-js", /^<script\b[^>]*>([\S\s]*?)(<\/script\b[^>]*>)/i], ["lang-css", /^<style\b[^>]*>([\S\s]*?)(<\/style\b[^>]*>)/i], ["lang-in.tag", /^(<\/?[a-z][^<>]*>)/i]]),
+            ["default-markup", "htm", "html", "mxml", "xhtml", "xml", "xsl"]);
+        k(x([["pln", /^\s+/, q, " \t\r\n"], ["atv", /^(?:"[^"]*"?|'[^']*'?)/, q, "\"'"]], [["tag", /^^<\/?[a-z](?:[\w-.:]*\w)?|\/?>$/i], ["atn", /^(?!style[\s=]|on)[a-z](?:[\w:-]*\w)?/i], ["lang-uq.val", /^=\s*([^\s"'>]*(?:[^\s"'/>]|\/(?=\s)))/], ["pun", /^[/<->]+/], ["lang-js", /^on\w+\s*=\s*"([^"]+)"/i], ["lang-js", /^on\w+\s*=\s*'([^']+)'/i], ["lang-js", /^on\w+\s*=\s*([^\s"'>]+)/i], ["lang-css", /^style\s*=\s*"([^"]+)"/i], ["lang-css", /^style\s*=\s*'([^']+)'/i], ["lang-css",
+            /^style\s*=\s*([^\s"'>]+)/i]]), ["in.tag"]);
+        k(x([], [["atv", /^[\S\s]+/]]), ["uq.val"]);
+        k(u({keywords: F, hashComments: !0, cStyleComments: !0, types: K}), ["c", "cc", "cpp", "cxx", "cyc", "m"]);
+        k(u({keywords: "null,true,false"}), ["json"]);
+        k(u({keywords: H, hashComments: !0, cStyleComments: !0, verbatimStrings: !0, types: K}), ["cs"]);
+        k(u({keywords: G, cStyleComments: !0}), ["java"]);
+        k(u({keywords: v, hashComments: !0, multiLineStrings: !0}), ["bsh", "csh", "sh"]);
+        k(u({keywords: I, hashComments: !0, multiLineStrings: !0, tripleQuotedStrings: !0}),
+            ["cv", "py"]);
+        k(u({
+            keywords: "caller,delete,die,do,dump,elsif,eval,exit,foreach,for,goto,if,import,last,local,my,next,no,our,print,package,redo,require,sub,undef,unless,until,use,wantarray,while,BEGIN,END",
+            hashComments: !0,
+            multiLineStrings: !0,
+            regexLiterals: !0
+        }), ["perl", "pl", "pm"]);
+        k(u({keywords: J, hashComments: !0, multiLineStrings: !0, regexLiterals: !0}), ["rb"]);
+        k(u({keywords: w, cStyleComments: !0, regexLiterals: !0}), ["js"]);
+        k(u({
+            keywords: "all,and,by,catch,class,else,extends,false,finally,for,if,in,is,isnt,loop,new,no,not,null,of,off,on,or,return,super,then,true,try,unless,until,when,while,yes",
+            hashComments: 3, cStyleComments: !0, multilineStrings: !0, tripleQuotedStrings: !0, regexLiterals: !0
+        }), ["coffee"]);
+        k(x([], [["str", /^[\S\s]+/]]), ["regex"]);
+        window.prettyPrintOne = function (a, m, e) {
+            var h = document.createElement("PRE");
+            h.innerHTML = a;
+            e && D(h, e);
+            E({g: m, i: e, h: h});
+            return h.innerHTML
+        };
+        window.prettyPrint = function (a) {
+            function m() {
+                for (var e = window.PR_SHOULD_USE_CONTINUATION ? l.now() + 250 : Infinity; p < h.length && l.now() < e; p++) {
+                    var n = h[p], k = n.className;
+                    if (k.indexOf("prettyprint") >= 0) {
+                        var k = k.match(g), f, b;
+                        if (b =
+                            !k) {
+                            b = n;
+                            for (var o = void 0, c = b.firstChild; c; c = c.nextSibling) var i = c.nodeType, o = i === 1 ? o ? b : c : i === 3 ? N.test(c.nodeValue) ? b : o : o;
+                            b = (f = o === b ? void 0 : o) && "CODE" === f.tagName
+                        }
+                        b && (k = f.className.match(g));
+                        k && (k = k[1]);
+                        b = !1;
+                        for (o = n.parentNode; o; o = o.parentNode) if ((o.tagName === "pre" || o.tagName === "code" || o.tagName === "xmp") && o.className && o.className.indexOf("prettyprint") >= 0) {
+                            b = !0;
+                            break
+                        }
+                        b || ((b = (b = n.className.match(/\blinenums\b(?::(\d+))?/)) ? b[1] && b[1].length ? +b[1] : !0 : !1) && D(n, b), d = {
+                            g: k,
+                            h: n,
+                            i: b
+                        }, E(d))
+                    }
+                }
+                p < h.length ? setTimeout(m,
+                    250) : a && a()
+            }
+
+            for (var e = [document.getElementsByTagName("pre"), document.getElementsByTagName("code"), document.getElementsByTagName("xmp")], h = [], k = 0; k < e.length; ++k) for (var t = 0, s = e[k].length; t < s; ++t) h.push(e[k][t]);
+            var e = q, l = Date;
+            l.now || (l = {
+                now: function () {
+                    return +new Date
+                }
+            });
+            var p = 0, d, g = /\blang(?:uage)?-([\w.]+)(?!\S)/;
+            m()
+        };
+        window.PR = {
+            createSimpleLexer: x,
+            registerLangHandler: k,
+            sourceDecorator: u,
+            PR_ATTRIB_NAME: "atn",
+            PR_ATTRIB_VALUE: "atv",
+            PR_COMMENT: "com",
+            PR_DECLARATION: "dec",
+            PR_KEYWORD: "kwd",
+            PR_LITERAL: "lit",
+            PR_NOCODE: "nocode",
+            PR_PLAIN: "pln",
+            PR_PUNCTUATION: "pun",
+            PR_SOURCE: "src",
+            PR_STRING: "str",
+            PR_TAG: "tag",
+            PR_TYPE: "typ"
+        }
+    })();
+</script>
+
+<script>
+    ;(function () {
+        function isTouchDevice() {
+            return ('ontouchstart' in document.documentElement)
+        }
+
+        function init() {
+            prettyPrint()
+
+            // prevent "browser drag" of the black king
+            $('.hero-inner-556fe img').on('mousedown', function (evt) {
+                evt.preventDefault()
+            })
+
+            // prevent hover problems on touch devices
+            if (isTouchDevice()) {
+                $('.navbar-a57cc').removeClass('hover-effect')
+            }
+        }
+
+        $(document).ready(init)
+    })()
+</script>
+
+<style>
+    button {
+        background: #2ba6cb;
+        border-radius: 3px;
+        border: 1px solid #1e728c;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 15px 5px 0 0;
+        outline: none;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+    }
+</style>
+
+{% endblock %}
+

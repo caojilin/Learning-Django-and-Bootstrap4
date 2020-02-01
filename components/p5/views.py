@@ -8,22 +8,17 @@ from django.contrib import auth, messages
 def index(request):
     return render(request, 'p5/p5index.html')
 
-
 def t_rex(request):
     return render(request, 'p5/t_rex.html')
-
 
 def game_2048(request):
     return render(request, 'p5/game_2048.html')
 
-
 def tic_tac_toe(request):
     return render(request, 'p5/tic_tac_toe.html')
 
-
 def maze(request):
     return render(request, 'p5/maze.html')
-
 
 def flappy_bird(request):
     return render(request, 'p5/flappy_bird.html')
@@ -33,3 +28,9 @@ def angry_bird(request):
 
 def smart_rocket(request):
     return render(request, 'p5/smart_rocket.html')
+
+def chess(request):
+    return render(request, 'p5/chess.html')
+
+def img(request, id):
+    return render(request, 'p5/img.html')
