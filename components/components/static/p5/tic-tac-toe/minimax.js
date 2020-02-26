@@ -19,6 +19,7 @@ function bestMove() {
   }
   board[move.i][move.j] = ai;
   currentPlayer = human;
+  bestscore_ai_predicted = bestScore;
 }
 
 let scores = {
@@ -28,6 +29,9 @@ let scores = {
 };
 
 function minimax(board, depth, isMaximizing) {
+  //returns the best score the opponents can get
+  //isMaximizing indicates the opponents' decisions, for example,
+  //when isMaximizing = false, the opponents are trying to minimize the scores
   let result = checkWinner();
   if (result !== null) {
     return scores[result];

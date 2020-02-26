@@ -11,14 +11,25 @@ let h; // = height / 3;
 
 let ai = 'X';
 let human = 'O';
-let currentPlayer = human;
+//AI plays first
+let currentPlayer = ai;
+let bestscore_ai_predicted = 0;
+let winner = null;
 
 function setup() {
   var canvas = createCanvas(400, 400);
   canvas.parent('sketch-holder');
   w = width / 3;
   h = height / 3;
-  // bestMove();
+  //comment this to make Human play first
+  first_move();
+}
+
+function first_move() {
+  let moves = [[0,0],[0,2],[2,0],[2,2]];
+  let firstmove = random(moves);
+  board[firstmove[0]][firstmove[1]] = ai;
+  currentPlayer = human;
 }
 
 function equals3(a, b, c) {
@@ -67,7 +78,7 @@ function checkWinner() {
 }
 
 function mousePressed() {
-  if (currentPlayer == human) {
+  if(currentPlayer == human) {
     // Human make turn
     let i = floor(mouseX / w);
     let j = floor(mouseY / h);
@@ -77,6 +88,18 @@ function mousePressed() {
       currentPlayer = ai;
       bestMove();
     }
+  }
+}
+
+function mouseClicked() {
+  if (winner != null){
+    winner = null;
+    board = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ];
+    currentPlayer = human;
   }
 }
 
@@ -105,17 +128,12 @@ function draw() {
       }
     }
   }
-
-  let result = checkWinner();
-  if (result != null) {
-    noLoop();
-    let resultP = createP('');
-    resultP.style('font-size', '32pt');
-    resultP.parent('sketch-holder');
-    if (result == 'tie') {
-      resultP.html('Tie!');
-    } else {
-      resultP.html(`${result} wins!`);
-    }
+  select('#predict').html("AI predicted score: "+bestscore_ai_predicted);
+  select('#result').html("winner: " + winner);
+  winner = checkWinner();
+  if (winner){
+    select('#restart').html("click anywhere to restart");
+  }else {
+    select('#restart').html("&nbsp;");
   }
 }

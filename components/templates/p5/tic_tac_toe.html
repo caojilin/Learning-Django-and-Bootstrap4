@@ -6,12 +6,17 @@
 
 
 {% block content %}
-
+<style>
+    h2 {
+        color: #1e728c;
+    }
+</style>
+<h2>Human: O</h2>
+<h2>AI: X</h2>
 <div id="sketch-holder">
-    <p style="font-size:14pt" id="player1"></p>
-    <p style="font-size:14pt" id="player2"></p>
-    <p style="font-size:14pt" id="moves"></p>
-    <p style="font-size:14pt" id="result"></p>
+    <p style="font-size:24pt;" id="predict"></p>
+    <p style="font-size:24pt;" id="result"></p>
+    <p style="font-size:24pt;color: red" id="restart"></p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>

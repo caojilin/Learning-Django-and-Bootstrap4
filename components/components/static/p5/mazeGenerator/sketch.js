@@ -22,31 +22,31 @@ function setup() {
     frameRate(fps);
 
     inp1 = createInput('fps:30');
-    inp1.position(sidebar_w+650, 150);
+    inp1.position(sidebar_w + 650, 150);
     inp1.style('font-size', 20 + 'px');
     inp1.input(changeFPS);
 
     fpsDisplay = createDiv('');
     fpsDisplay.style('font-size', '18pt');
-    fpsDisplay.position(sidebar_w+650, 200);
+    fpsDisplay.position(sidebar_w + 650, 200);
 
     inp2 = createInput('size:20x20');
-    inp2.position(sidebar_w+650, 250);
+    inp2.position(sidebar_w + 650, 250);
     inp2.style('font-size', 20 + 'px');
     inp2.input(generateNewWorld);
 
     button2 = createButton('instant');
-    button2.position(sidebar_w+650, 300);
+    button2.position(sidebar_w + 650, 300);
     button2.style('font-size', 24 + 'px');
     button2.mousePressed(instant);
 }
 
 function mouseClicked() {
-    if (mouseX < width && mouseX > 0 && mouseY >0 && mouseY <height){
+    if (mouseX < width && mouseX > 0 && mouseY > 0 && mouseY < height) {
         pause = !pause;
-        if (pause){
+        if (pause) {
             noLoop();
-        }else {
+        } else {
             loop();
         }
     }
@@ -54,7 +54,7 @@ function mouseClicked() {
 
 function instant() {
     //STEP 1.1
-    while (stack.length >0){
+    while (stack.length > 0) {
         //STEP 2.2
         current = stack.pop();
         current.highlight();
@@ -72,11 +72,11 @@ function instant() {
 }
 
 function generateNewWorld() {
-    if (inp2.value() == ''){
+    if (inp2.value() == '') {
         noLoop();
-    }else {
+    } else {
         loop();
-        w = floor(width/inp2.value());
+        w = floor(width / inp2.value());
         grid = [];
         cols = floor(width / w);
         rows = floor(height / w);
