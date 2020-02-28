@@ -23,10 +23,12 @@ class Pipe {
   }
 
   show() {
-    fill(255);
+    push();
+    fill('green');
     rectMode(CORNER);
     rect(this.x, 0, this.w, this.top);
     rect(this.x, height - this.bottom, this.w, this.bottom);
+    pop();
   }
 
   update() {

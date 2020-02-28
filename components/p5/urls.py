@@ -11,5 +11,5 @@ urlpatterns = [
     path('angry_bird', views.angry_bird, name='angry_bird'),
     path('smart_rocket', views.smart_rocket, name='smart_rocket'),
     path('chess', views.chess, name='chess'),
-    path('img/<id>', views.img, name='img'),
+    path('sudoku', views.sudoku, name='sudoku'),
 ]

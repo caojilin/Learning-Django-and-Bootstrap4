@@ -11,4 +11,5 @@ urlpatterns = [
     path('manga', views.manga, name='manga'),
     path('gallery', views.gallery, name='gallery'),
     path('about', views.about, name='about'),
+    path('random_img/<id>', views.random_img, name='random_img'),
 ]

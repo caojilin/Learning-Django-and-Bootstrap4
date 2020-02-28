@@ -26,9 +26,10 @@ class Bird {
   }
 
   show() {
-    stroke(255);
-    fill(255, 100);
+    push();
+    fill(255,0,0,150);
     ellipse(this.x, this.y, this.radius*2);
+    pop();
   }
 
   up() {

@@ -79,3 +79,6 @@ def gallery(request):
 
 def about(request):
     return render(request, 'pages/about.html', context)
+
+def random_img(request, id):
+    return render(request, 'pages/random_img.html')

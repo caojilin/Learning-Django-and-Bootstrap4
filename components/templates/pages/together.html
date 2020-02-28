@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container"> <!-- container -->
+    <div class="body-content row" id="youtube-example">
+        <div class="col-md-6 col-md-offset-3">
+            <div id="introduction">
+                <h1>
+                    YouTube Together
+                    <button class="pull-right tjsbutton" onclick="TogetherJS(this); return false;">
+                        Chat App
+                    </button>
+                </h1>
+            </div>
+            <div id="initial-video">
+                <div class="embed-code flex-video">
+                    <iframe width="600" height="400" src="https://www.youtube.com/embed/j5lQ1rBVc5k" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            <form role="form">
+                <div class="row">
+                    <div class="col-xs-12 labelarea">
+                        <div class="youtube-embed-link">
+                            <h4>Invite someone to watch a YouTube video together.</h4>
+                            <p class="youtube-embed-label">Watch a different YouTube video together!
+                                (http://youtu.be/<b>j5lQ1rBVc5k)</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7 col-md-7 linkarea">
+                        <input type="text" class="form-control" id="video-id-input"
+                               placeholder='j5lQ1rBVc5k (enter a video id)'>
+                    </div>
+                </div>
+                <button type="button" class="embed-submit-button btn btn-primary">Submit</button>
+            </form>
+        </div> <!-- // youtube container -->
+    </div> <!-- //body-content -->
+</div>
+
+<script>
+    var TogetherJSConfig_toolName = "Collaboration";
+    var TogetherJSConfig_dontShowClicks = true;
+</script>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+  $('.embed-submit-button').click(function() {
+    // FIXME: uncaught exception: [CannotFind #video-id-input(:nth-child(1)): container only has 0 elements in #video-id-input]
+    // I am not sure where this exception is generated. Maybe it is caused by togetherJS?
+    var newVideoId = $('#video-id-input').val();
+    var newSrc = '//www.youtube.com/embed/' + newVideoId;
+    var youTubeIframe = $('iframe')[0];
+    $(youTubeIframe).attr("src", newSrc);
+    console.log("gonna run reinitailize now...");
+    //reinitialize to configure youtube players again
+    TogetherJS.reinitialize();
+  });
+  $('video-id-input').keypress(function(event) {
+    if (event.keyCode == 13)
+      $('.embed-submit-button').click();
+  });
+});
+
+
+</script>
+{% endblock %}

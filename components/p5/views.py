@@ -32,5 +32,5 @@ def smart_rocket(request):
 def chess(request):
     return render(request, 'p5/chess.html')
 
-def img(request, id):
-    return render(request, 'p5/img.html')
+def sudoku(request):
+    return render(request, 'p5/sudoku.html')

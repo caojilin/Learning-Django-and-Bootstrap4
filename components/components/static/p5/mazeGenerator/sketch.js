@@ -61,7 +61,7 @@ function instant() {
         var next = current.checkNeighbors();
         if (next) {
             //STEP 2.2.1
-            stack.push(current)
+            stack.push(current);
             //STEP 2.2.3
             removeWalls(current, next);
             //STEP 2.2.4
@@ -69,27 +69,6 @@ function instant() {
             stack.push(next);
         }
     }
-}
-
-function generateNewWorld() {
-    if (inp2.value() == '') {
-        noLoop();
-    } else {
-        loop();
-        w = floor(width / inp2.value());
-        grid = [];
-        cols = floor(width / w);
-        rows = floor(height / w);
-        for (var j = 0; j < cols; j++) {
-            for (var i = 0; i < rows; i++) {
-                grid.push(new Cell(i, j));
-            }
-        }
-        current = grid[0];
-        stack = [];
-        stack.push(current);
-    }
-
 }
 
 
@@ -114,7 +93,7 @@ function draw() {
     var next = current.checkNeighbors();
     if (next) {
         //STEP 2.2.1
-        stack.push(current)
+        stack.push(next)
         //STEP 2.2.3
         removeWalls(current, next);
         //STEP 2.2.4
@@ -166,7 +145,7 @@ function Cell(i, j) {
         } else {
             return undefined;
         }
-    }
+    };
     this.highlight = function () {
         var x = this.i * w;
         var y = this.j * w;
@@ -174,7 +153,7 @@ function Cell(i, j) {
         fill('green');
         ellipseMode(CENTER);
         ellipse(x + w / 2, y + w / 2, w / 2, w / 2);
-    }
+    };
 
     this.show = function () {
         var x = this.i * w;

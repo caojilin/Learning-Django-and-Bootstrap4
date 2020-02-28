@@ -68,7 +68,14 @@ function draw() {
     }
 
     // All the drawing stuff
-    background(0);
+
+
+    push();
+    background(220);
+    pop();
+
+    push();
+    fill(0);
     textSize(18);
     text('score:' + score, 10, 30);
 
@@ -77,6 +84,7 @@ function draw() {
 
     textSize(18);
     text('total/alive:' + TOTAL + "/" + birds.length, 10, 64);
+    pop();
 
     for (let bird of birds) {
         bird.show();
