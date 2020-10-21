@@ -72,6 +72,28 @@ function instant() {
 }
 
 
+
+function generateNewWorld() {
+    if (inp2.value() == '') {
+        noLoop();
+    } else {
+        loop();
+        w = floor(width / inp2.value());
+        grid = [];
+        cols = floor(width / w);
+        rows = floor(height / w);
+        for (var j = 0; j < cols; j++) {
+            for (var i = 0; i < rows; i++) {
+                grid.push(new Cell(i, j));
+            }
+        }
+        current = grid[0];
+        stack = [];
+        stack.push(current);
+    }
+
+}
+
 function changeFPS() {
     console.log(inp1.value());
     fps = parseInt(inp1.value());
